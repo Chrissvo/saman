@@ -4,6 +4,11 @@ module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'solarcalculation',
     environment: environment,
+    contentSecurityPolicy: { 
+      'connect-src': "'self' https://auth.firebase.com wss://*.firebaseio.com",
+      'img-src': "'self' https://saman.christian.surf/assets/images/"
+    },
+    firebase: 'https://YOUR-FIREBASE-NAME.firebaseio.com/',
     baseURL: '/',
     locationType: 'auto',
     EmberENV: {
