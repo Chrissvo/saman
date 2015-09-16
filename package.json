@@ -1,8 +1,8 @@
 {
   "name": "solarcalculation",
   "version": "0.0.0",
-  "description": "Small description for solarcalculation goes here",
-  "private": true,
+  "description": "Solarcalculation is modeling software that calculates the ROI on solar power installations",
+  "private": false,
   "directories": {
     "doc": "doc",
     "test": "tests"
