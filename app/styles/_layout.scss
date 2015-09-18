@@ -1,0 +1,22 @@
+body {
+  margin: 0;
+  .logo {
+    padding: 15px 15px 10px 15px;
+  }
+  h1 {
+    color: $h1;
+    font: 44px/42px 'Open Sans', sans-serif;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+  h2 {
+    color: $h2;
+    font: 24px/27px 'Open Sans', sans-serif;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+}
