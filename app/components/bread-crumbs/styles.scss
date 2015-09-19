@@ -3,7 +3,7 @@
   border-top: 1px solid $grey;
   height: 40px;
   line-height: 40px;
-  padding: 0 15px 0 15px;
+  padding: 0 5% 0 5%;
   ul.breadcrumbs {
     list-style-type: none;
     margin: 0;
@@ -12,6 +12,13 @@
       text-transform: uppercase;
       letter-spacing: 1px;
       color: $text;
+      display: inline;
+      &.chevron {
+        color: $orange;
+        &:before, &:after {
+          content: '\00a0 ';
+        }
+      }
     }
   }
 }
