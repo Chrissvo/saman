@@ -1,5 +1,9 @@
 <div class="breadcrumbs-bar">
   <ul class="breadcrumbs">
-    <li>{{#link-to 'index'}}Samangroep rekenmodel{{/link-to}}</li>
+    <li>{{#link-to 'index'}}Home{{/link-to}}</li>
+    {{#if (not-eq currentPath "index")}}
+      <li class="chevron">></li>
+      <li>{{breadCrumb}}</li>
+    {{/if}}
   </ul>
 </div>
