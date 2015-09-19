@@ -1,0 +1,15 @@
+button {
+  background-color: $green;
+  color: $black;
+  border: 1px solid $grey;
+  font: 14px/22px Arial, sans-serif;
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+  &:hover {
+    background-color: lighten($green, 5%);
+  }
+  &:focus, &:active, &:focus:active {
+    box-shadow: 0 0 5px $green;
+  }
+}
