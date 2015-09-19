@@ -5,6 +5,10 @@
   text-align: center;
   border-radius: 2px;
   text-transform: uppercase;
+  &:hover {
+    background-color: darken($white, 2%);
+    border: 1px solid $green;
+  }
   .icon {
     padding: 30px 15px 15px 15px;
     text-decoration: none;
