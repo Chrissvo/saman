@@ -1,4 +1,4 @@
-<div class="form-group">
-	<label {{bind-attr for=label}}>{{label}}</label>
-	{{input type=type value=value id=label class="form-control"}}
+<div class="form-group {{if isRequired "required"}}">
+  <label class="form-label" {{bind-attr for=label}}>{{label}}</label>
+  {{input type=type value=value required=isRequired id=fieldId class="form-control"}}
 </div>	
