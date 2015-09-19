@@ -4,8 +4,12 @@
   background-color: $white;
   text-align: center;
   border-radius: 2px;
+  text-transform: uppercase;
   .icon {
     padding: 30px 15px 15px 15px;
     text-decoration: none;
+  }
+  .label {
+  	color: $text;
   }
 }
