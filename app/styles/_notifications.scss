@@ -1,0 +1,43 @@
+div.notifications {
+  position: fixed;
+  z-index: 2;
+  width: 100%;
+  bottom: 0;
+  font-size: 16px;
+  .notification {
+    padding: 5px;
+    height: 30px;
+    line-height: 30px;
+    margin-bottom: 0;
+    margin-top: 0;
+    .fa {
+      top: 2px;
+      padding-right: 2px;
+      cursor: pointer;
+    }
+  }
+  .warning {
+    background-color: $warning-bg;
+    color: $warning;
+    border-bottom: 1px solid $warning;
+  }
+  .error {
+    background-color: $error-bg;
+    color: $error;
+    border-bottom: 1px solid $error;
+  }
+  .success {
+    background-color: $success-bg;
+    color: $success;
+    border-bottom: 1px solid $success;
+  }
+  .info {
+    background-color: $info-bg;
+    color: $info;
+    border-bottom: 1px solid $info;
+  }
+  .close-notification {
+    float: right;
+    line-height: 30px;
+  }
+}
