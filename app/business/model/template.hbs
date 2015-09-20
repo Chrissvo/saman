@@ -1,16 +1,14 @@
+{{#bread-crumbs model=model}}{{/bread-crumbs}}
 
-<div class="container">
-<h2>Klantgegevens</h2>
-
-  {{#object-form action="updateCustomer" buttonLabel="Volgende"}}
-
-    {{form-field label="Naam" value=name}}
-    {{form-field label="Adres" value=address}}
-    {{form-field label="Postcode" value=zipcode}}
-    {{form-field label="Woonplaats" value=city}}
-    {{form-field label="E-mail" value=email}}
-    {{form-field label="Telefoon" value=phone}}
+{{#if customerForm}}
+  {{#object-form submit="saveCustomer" header="Klantgegevens" buttonLabel="Volgende"}}
+  
+  	{{form-field type="text" fieldId="name" value=name label="Naam"}}
+  	{{form-field type="text" fieldId="address" value=address label="Adres"}}
+  	{{form-field type="text" fieldId="zip" value=zip label="Postcode"}}
+  	{{form-field type="text" fieldId="city" value=city label="Woonplaats"}}
+  	{{form-field type="email" fieldId="email" value=email isRequired=true label="E-mail"}}
+  	{{form-field type="text" fieldId="phone" value=phone label="Telefoon"}}
 
   {{/object-form}}
-
-</div>
+{{/if}}
