@@ -2,5 +2,11 @@
 @import 'layout';
 @import 'typography';
 @import 'box';
+@import 'index';
+@import 'buttons';
+@import 'notifications';
+// mixins
+@import 'mixins/clearfix';
+@import 'mixins/columns';
 // import component styles
-@import "pod-styles";
+@import 'pod-styles';
