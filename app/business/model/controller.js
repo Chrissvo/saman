@@ -57,10 +57,36 @@ export default Ember.Controller.extend({
         });
       }.bind(this));
     },
+
+    saveCompany: function(data) {
+      const customerId = this.get('customerId');
+      if (customerId === undefined) {
+        // fail
+        return this.get('applicationController').notify({
+          id: 'fail.noCustomer',
+          message: 'Opslaan is mislukt, er zijn geen klantgegevens!',
+          type: 'error'
+        });
+      }
+      data.customer = this.store.peekRecord('customer', customerId);
+      if (data.otherInvestments === undefined) {
+        data.otherInvestments = "0";
+      }
+      const newCompany = this.store.createRecord('company', data);
+      newCompany.save().then(function() {
+        // success
+        this.set('companyForm', false);
+        return this.set('energyForm', true);
+      }.bind(this)).catch(function(error) {
+        // fail
+        return this.get('applicationController').notify({
+          id: 'fail.saveCompany',
+          message: 'Opslaan van dit bedrijf is mislukt! ' + error,
           type: 'error'
         });
       }.bind(this));
     }
+
   }
 
 });
