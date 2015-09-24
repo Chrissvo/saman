@@ -10,7 +10,7 @@ module.exports = function(environment) {
       'font-src': "'self https://fonts.gstatic.com http://netdna.bootstrapcdn.com/font-awesome/",
       'style-src': "'self' https://fonts.googleapis.com/"
     },
-    firebase: 'https://YOUR-FIREBASE-NAME.firebaseio.com/',
+    firebase: 'https://solarcalculation.firebaseio.com/',
     baseURL: '/',
     locationType: 'auto',
     EmberENV: {
