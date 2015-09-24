@@ -4,7 +4,7 @@ export default Ember.Controller.extend({
 
   customerForm: true,
   companyForm: false,
-  energyForm: false,
+  systemForm: true,
   customerId: undefined,
 
   companyType: 'Eenmanszaak',
@@ -76,7 +76,7 @@ export default Ember.Controller.extend({
       newCompany.save().then(function() {
         // success
         this.set('companyForm', false);
-        return this.set('energyForm', true);
+        return this.set('systemForm', true);
       }.bind(this)).catch(function(error) {
         // fail
         return this.get('applicationController').notify({
