@@ -9,6 +9,7 @@ export default DS.Model.extend({
   email: DS.attr('string'),
   phone: DS.attr('string'),
 
-  companies: DS.hasMany('company')
+  companies: DS.hasMany('company'),
+  systems: DS.hasMany('system')
 
 });
