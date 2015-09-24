@@ -8,12 +8,14 @@ body {
     font: 44px/42px 'Open Sans', sans-serif;
     font-weight: 800;
     text-transform: uppercase;
+    word-break: break-word;
   }
   h2 {
     color: $h2;
     font: 24px/27px 'Open Sans', sans-serif;
     font-weight: 800;
     text-transform: uppercase;
+    word-break: break-word;
   }
   a {
     text-decoration: none;
