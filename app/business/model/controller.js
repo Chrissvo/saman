@@ -4,7 +4,39 @@ export default Ember.Controller.extend({
 
   customerForm: true,
   companyForm: false,
+  energyForm: false,
   customerId: undefined,
+
+  companyType: 'Eenmanszaak',
+  companyTypes: [
+    'Eenmanszaak',
+    'Maatschap',
+    'CV',
+    'VOF',
+    'BV',
+    'NV',
+    'Stichting',
+    'Vereniging'
+  ],
+
+  incomeCategory: '€ 0 - € 18.628',
+  personalIncomeCategories: [
+    '€ 0 - € 18.628',
+    '€ 18.628 - € 33.426',
+    '€ 33.426 - € 55.694',
+    '€ 55.694 en hoger'
+  ],
+  corporateIncomeCategories: [
+    'minder dan € 200.000',
+    'meer dan € 200.000'
+  ],
+
+  connection: 'Aansluiting groter dan 3x80A',
+  connectionTypes: [
+    'Aansluiting groter dan 3x80A',
+    'Aansluiting kleiner dan of gelijk aan 3x80A'
+  ],
+
   applicationController: Ember.inject.controller('application'),
 
   actions: {
