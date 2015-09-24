@@ -111,6 +111,32 @@ export default Ember.Controller.extend({
           type: 'error'
         });
       }.bind(this));
+    },
+
+    saveSystem: function(data) {
+      const customerId = this.get('customerId');
+      if (customerId === undefined) {
+        // fail
+        return this.get('applicationController').notify({
+          id: 'fail.noCustomer',
+          message: 'Opslaan is mislukt, er zijn geen klantgegevens!',
+          type: 'error'
+        });
+      }
+      data.customer = this.store.peekRecord('customer', customerId);
+      const newSystem = this.store.createRecord('system', data);
+      system.save().then(function() {
+        // success
+        this.set('systemForm', false);
+        // transition to results
+      }.bind(this)).catch(function(error) {
+        // fail
+        return this.get('applicationController').notify({
+          id: 'fail.saveSystem',
+          message: 'Opslaan van dit systeem is mislukt! ' + error,
+          type: 'error'
+        });
+      }.bind(this));
     }
 
   }
