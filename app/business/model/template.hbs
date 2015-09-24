@@ -15,6 +15,7 @@
 
 {{#if companyForm}}
   {{#object-form submit="saveCompany" header="Bedrijfsgegevens" buttonLabel="Volgende"}}
+
     {{form-field type="select" fieldId="companyType" selectData=companyTypes value=companyType label="Juridische bedrijfsform"}}
     {{#if (or (eq companyType 'BV') (eq companyType 'NV'))}}
       {{form-field type="select" fieldId="incomeCategory" selectData=corporateIncomeCategories value=incomeCategory label="Inkomen / Winst"}}
@@ -26,6 +27,7 @@
     {{form-field type="number" fieldId="energyPrice" value=energyPrice label="Netto energieprijs per kWh" isRequired=true}}
     {{form-field type="number" fieldId="factorOwnUsage" value=factorOwnUsage label="Factor eigen verbruik in %" isRequired=true}}
     {{form-field type="select" fieldId="connection" selectData=connectionTypes value=connection label="Aansluiting"}}
+
   {{/object-form}}
 {{/if}}
 
