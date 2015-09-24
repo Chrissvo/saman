@@ -9,6 +9,7 @@ Router.map(function() {
   this.route('business', function() {
     this.route('model');
   });
+  this.route('search');
 });
 
 export default Router;
