@@ -6,21 +6,25 @@ export default Ember.Component.extend({
     return this.container.lookup('controller:application').get('currentPath');
   }.property(),
 
-  breadCrumb: function() {
+  breadCrumbs: function() {
     const currentPath = this.get('currentPath');
-    let breadCrumb;
+    let breadCrumbs;
     switch (currentPath) {
       case 'index':
-        breadCrumb = '';
+        breadCrumbs = [''];
         break;
-      case 'business.model':
-        breadCrumb = 'Zakelijk Rekenmodel';
+      case 'business.model.index':
+        breadCrumbs = ['Zakelijk Rekenmodel'];
+        break;
+      case 'business.model.results':
+        this.set('multiple', true);
+        breadCrumbs = ['Zakelijk Rekenmodel', 'Resultaten'];
         break;
       case 'search':
-        breadCrumb = 'Model Ophalen';
+        breadCrumbs = ['Model Ophalen'];
         break;
     }
-    return breadCrumb;
+    return breadCrumbs;
   }.property()
 
 });

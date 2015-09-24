@@ -2,8 +2,10 @@
   <ul class="breadcrumbs">
     <li>{{#link-to 'index'}}Home{{/link-to}}</li>
     {{#if (not-eq currentPath "index")}}
-      <li class="chevron">></li>
-      <li>{{breadCrumb}}</li>
+      {{#each breadCrumbs as |breadCrumb|}}
+        <li class="chevron">></li>
+        <li>{{breadCrumb}}</li>
+      {{/each}}
     {{/if}}
   </ul>
 </div>
