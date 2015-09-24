@@ -23,6 +23,9 @@ export default Ember.Component.extend({
               type: 'warning'
             });
           }
+          else {
+            data[fieldId] = fieldValue;
+          }
         }
         else if (fieldValue && fieldValue.length > 0) {
           data[fieldId] = fieldValue;
