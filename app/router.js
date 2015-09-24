@@ -7,7 +7,9 @@ var Router = Ember.Router.extend({
 
 Router.map(function() {
   this.route('business', function() {
-    this.route('model');
+    this.route('model', function() {
+      this.route('results');
+    });
   });
   this.route('search');
 });
