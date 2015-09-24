@@ -4,7 +4,7 @@ import {
 from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
-moduleForComponent('tile-view', 'Integration | Component | tile view', {
+moduleForComponent('bread-crumbs', 'Integration | Component | bread crumbs', {
   integration: true
 });
 
@@ -14,16 +14,16 @@ test('it renders', function(assert) {
   // Set any properties with this.set('myProperty', 'value');
   // Handle any actions with this.on('myAction', function(val) { ... });
 
-  this.render(hbs `{{tile-view}}`);
+  this.render(hbs `{{bread-crumbs}}`);
 
-  assert.equal(this.$().text().trim(), '');
+  assert.equal(this.$().text().trim().substring(0, 4), 'Home');
 
   // Template block usage:
   this.render(hbs `
-    {{#tile-view}}
+    {{#bread-crumbs}}
       template block text
-    {{/tile-view}}
+    {{/bread-crumbs}}
   `);
 
-  assert.equal(this.$().text().trim(), '');
+  assert.equal(this.$().text().trim().substring(0, 4), 'Home');
 });
