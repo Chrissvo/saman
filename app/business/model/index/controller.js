@@ -160,10 +160,10 @@ export default Ember.Controller.extend({
       data.customer = this.store.peekRecord('customer', customerId);
       data.company = this.store.peekRecord('company', companyId);
       const newSystem = this.store.createRecord('system', data);
-      system.save().then(function() {
+      newSystem.save().then(function() {
         // success
         this.set('systemForm', false);
-        // transition to results
+        return this.transitionToRoute('business.model.results');
       }.bind(this)).catch(function(error) {
         // fail
         return this.get('applicationController').notify({
