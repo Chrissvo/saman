@@ -13,7 +13,10 @@
     "test": "ember test",
     "deploy": "./scripts/deploy.sh"
   },
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chrissvo/solarcalculation.git"
+  },
   "engines": {
     "node": ">= 0.10.0"
   },
