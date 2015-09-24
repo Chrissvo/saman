@@ -6,6 +6,7 @@ export default Ember.Controller.extend({
   companyForm: false,
   systemForm: false,
   customerId: undefined,
+  companyId: undefined,
 
   companyType: 'Eenmanszaak',
   companyTypes: [
@@ -122,8 +123,9 @@ export default Ember.Controller.extend({
         data.otherInvestments = "0";
       }
       const newCompany = this.store.createRecord('company', data);
-      newCompany.save().then(function() {
+      newCompany.save().then(function(company) {
         // success
+        this.set('companyId', company.get('id'));
         this.set('companyForm', false);
         return this.set('systemForm', true);
       }.bind(this)).catch(function(error) {
@@ -138,6 +140,7 @@ export default Ember.Controller.extend({
 
     saveSystem: function(data) {
       const customerId = this.get('customerId');
+      const companyId = this.get('companyId');
       if (customerId === undefined) {
         // fail
         return this.get('applicationController').notify({
@@ -146,7 +149,16 @@ export default Ember.Controller.extend({
           type: 'error'
         });
       }
+      if (companyId === undefined) {
+        // fail
+        return this.get('applicationController').notify({
+          id: 'fail.noCompany',
+          message: 'Opslaan is mislukt, er zijn geen bedrijfsgegevens!',
+          type: 'error'
+        });
+      }
       data.customer = this.store.peekRecord('customer', customerId);
+      data.company = this.store.peekRecord('company', companyId);
       const newSystem = this.store.createRecord('system', data);
       system.save().then(function() {
         // success

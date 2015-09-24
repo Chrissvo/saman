@@ -12,6 +12,7 @@ export default DS.Model.extend({
   sdePhase: DS.attr('string'),
   apxPrice: DS.attr('number'),
 
-  customer: DS.belongsTo('customer')
+  customer: DS.belongsTo('customer'),
+  company: DS.belongsTo('company')
 
 });
