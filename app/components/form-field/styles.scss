@@ -1,10 +1,13 @@
 .form-group {
   clear: both;
   padding-top: 5px;
-  input, label {
+  input,
+  select,
+  label {
     @include columns(2, 2%);
   }
-  input {
+  input,
+  select {
     border-radius: 2px;
     padding: 3px 0 3px 3px;
     border: 1px solid #DDDDDD;
@@ -12,11 +15,13 @@
     margin: -1px;
     outline: none;
   }
-  input:focus {
+  input:focus,
+  select:focus {
     box-shadow: 0 0 5px $green;
     border: 1px solid $green;
   }
 }
+
 .form-group.required label:after {
   content: " *";
   color: red;
