@@ -2,7 +2,7 @@
 
 {{#if customerForm}}
   {{#object-form submit="saveCustomer" header="Klantgegevens" buttonLabel="Volgende"}}
-  
+
   	{{form-field type="text" fieldId="name" value=name label="Naam"}}
   	{{form-field type="text" fieldId="address" value=address label="Adres"}}
   	{{form-field type="text" fieldId="zip" value=zip label="Postcode"}}
@@ -11,4 +11,24 @@
   	{{form-field type="text" fieldId="phone" value=phone label="Telefoon"}}
 
   {{/object-form}}
+{{/if}}
+
+{{#if companyForm}}
+  {{#object-form submit="saveCompany" header="Bedrijfsgegevens" buttonLabel="Volgende"}}
+    {{form-field type="select" fieldId="companyType" selectData=companyTypes value=companyType label="Juridische bedrijfsform"}}
+    {{#if (or (eq companyType 'BV') (eq companyType 'NV'))}}
+      {{form-field type="select" fieldId="incomeCategory" selectData=corporateIncomeCategories value=incomeCategory label="Inkomen / Winst"}}
+    {{else if (or (eq companyType 'Eenmanszaak') (eq companyType 'Maatschap') (eq companyType 'CV') (eq companyType 'VOF'))}}
+      {{form-field type="select" fieldId="incomeCategory" selectData=personalIncomeCategories value=incomeCategory label="Inkomen / Winst"}}
+    {{/if}}
+    {{form-field type="number" fieldId="otherInvestments" value=otherInvestments label="Overige investeringen"}}
+    {{form-field type="number" fieldId="energyUsage" value=energyUsage label="Huidig Verbruik in kWh/jaar"  isRequired=true}}
+    {{form-field type="number" fieldId="energyPrice" value=energyPrice label="Netto energieprijs per kWh" isRequired=true}}
+    {{form-field type="number" fieldId="factorOwnUsage" value=factorOwnUsage label="Factor eigen verbruik in %" isRequired=true}}
+    {{form-field type="select" fieldId="connection" selectData=connectionTypes value=connection label="Aansluiting"}}
+  {{/object-form}}
+{{/if}}
+
+{{#if energyForm}}
+
 {{/if}}
