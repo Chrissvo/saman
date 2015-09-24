@@ -31,6 +31,18 @@
   {{/object-form}}
 {{/if}}
 
-{{#if energyForm}}
+{{#if systemForm}}
+
+  {{#object-form submit="saveSystem" header="Zonne-energiesysteem" buttonLabel="Start berekening"}}
+
+    {{form-field type="number" fieldId="panelAmount" value=panelAmount label="Aantal panelen" isRequired=true}}
+    {{form-field type="number" fieldId="panelPower" value=panelPower label="Vermogen in Watt piek" isRequired=true}}
+    {{form-field type="number" fieldId="panelCost" value=panelCost label="Koster per Watt piek" isRequired=true}}
+    {{form-field type="select" selectData=roofOrientations fieldId="roofOrientation" value=roofOrientation label="Orientatie"}}
+    {{form-field type="number" fieldId="roofSlope" value=roofSlope label="Hellingshoek" isRequired=true}}
+    {{form-field type="select" selectData=sdePhases fieldId="sdePhase" value=sdePhase label="SDE Inschrijffase"}}
+    {{form-field type="number" fieldId="apxPrice" value=apxPrice label="APX energieprijs" isRequired=true}}
+
+  {{/object-form}}
 
 {{/if}}
