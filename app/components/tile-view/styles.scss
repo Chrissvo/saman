@@ -5,6 +5,7 @@
   text-align: center;
   border-radius: 2px;
   text-transform: uppercase;
+  margin: 10px;
   &:hover {
     background-color: darken($white, 2%);
     outline: 1px solid $green;
@@ -15,6 +16,6 @@
     color: $black;
   }
   .label {
-  	color: $text;
+    color: $text;
   }
 }
