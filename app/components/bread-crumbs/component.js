@@ -15,6 +15,10 @@ export default Ember.Component.extend({
         break;
       case 'business.model':
         breadCrumb = 'Zakelijk Rekenmodel';
+        break;
+      case 'search':
+        breadCrumb = 'Model Ophalen';
+        break;
     }
     return breadCrumb;
   }.property()
