@@ -37,6 +37,32 @@ export default Ember.Controller.extend({
     'Aansluiting kleiner dan of gelijk aan 3x80A'
   ],
 
+  roofOrientation: 'W',
+  roofOrientations: [
+    'W',
+    'WWZ',
+    'ZW',
+    'ZZW',
+    'Z',
+    'ZZO',
+    'ZO',
+    'OOZ',
+    'O'
+  ],
+
+  sdePhase: 'Fase 1 (vanaf 31 maart)',
+  sdePhases: [
+    'Fase 1 (vanaf 31 maart)',
+    'Fase 2 (vanaf 20 april)',
+    'Fase 3 (vanaf 11 mei)',
+    'Fase 4 (vanaf 1 juni)',
+    'Fase 5 (vanaf 22 juni)',
+    'Fase 6 (vanaf 31 augustus)',
+    'Fase 7 (vanaf 21 september)',
+    'Fase 8 (vanaf 12 oktober)',
+    'Fase 9 (vanaf 9 november)'
+  ],
+
   applicationController: Ember.inject.controller('application'),
 
   actions: {
