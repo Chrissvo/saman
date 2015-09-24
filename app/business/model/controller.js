@@ -4,7 +4,7 @@ export default Ember.Controller.extend({
 
   customerForm: true,
   companyForm: false,
-  systemForm: true,
+  systemForm: false,
   customerId: undefined,
 
   companyType: 'Eenmanszaak',
