@@ -202,4 +202,578 @@ export default Ember.Controller.extend({
   taxData: function() {
 
   }.property(),
+
+  revenueData: function() {
+    const panelAmount = this.get('model.system.panelAmount');
+    const panelPower = this.get('model.system.panelPower');
+    const systemPower = panelAmount * panelPower;
+    const roofOrientation = this.get('model.system.roofOrientation');
+    const roofSlope = this.get('model.system.roofSlope');
+    let roofOrientationFactor = 87;
+    switch (roofOrientation) {
+      case 'O':
+        switch (roofSlope) {
+          case 0:
+            roofOrientationFactor = 87;
+            break;
+          case 5:
+            roofOrientationFactor = 89;
+            break;
+          case 10:
+            roofOrientationFactor = 90;
+            break;
+          case 15:
+            roofOrientationFactor = 89;
+            break;
+          case 20:
+            roofOrientationFactor = 88;
+            break;
+          case 25:
+            roofOrientationFactor = 87;
+            break;
+          case 30:
+            roofOrientationFactor = 86;
+            break;
+          case 35:
+            roofOrientationFactor = 85;
+            break;
+          case 40:
+            roofOrientationFactor = 84;
+            break;
+          case 45:
+            roofOrientationFactor = 82;
+            break;
+          case 50:
+            roofOrientationFactor = 80;
+            break;
+          case 55:
+            roofOrientationFactor = 78;
+            break;
+          case 60:
+            roofOrientationFactor = 78;
+            break;
+          case 65:
+            roofOrientationFactor = 73;
+            break;
+          case 70:
+            roofOrientationFactor = 70;
+            break;
+          case 75:
+            roofOrientationFactor = 68;
+            break;
+          case 80:
+            roofOrientationFactor = 65;
+            break;
+          case 85:
+            roofOrientationFactor = 62;
+            break;
+          case 90:
+            roofOrientationFactor = 58;
+            break;
+        }
+        break;
+      case 'ZOO':
+        switch (roofSlope) {
+          case 0:
+            roofOrientationFactor = 87;
+            break;
+          case 5:
+            roofOrientationFactor = 91;
+            break;
+          case 10:
+            roofOrientationFactor = 93;
+            break;
+          case 15:
+            roofOrientationFactor = 93;
+            break;
+          case 20:
+            roofOrientationFactor = 93;
+            break;
+          case 25:
+            roofOrientationFactor = 93;
+            break;
+          case 30:
+            roofOrientationFactor = 93;
+            break;
+          case 35:
+            roofOrientationFactor = 92;
+            break;
+          case 40:
+            roofOrientationFactor = 91;
+            break;
+          case 45:
+            roofOrientationFactor = 89;
+            break;
+          case 50:
+            roofOrientationFactor = 88;
+            break;
+          case 55:
+            roofOrientationFactor = 86;
+            break;
+          case 60:
+            roofOrientationFactor = 85;
+            break;
+          case 65:
+            roofOrientationFactor = 82;
+            break;
+          case 70:
+            roofOrientationFactor = 79;
+            break;
+          case 75:
+            roofOrientationFactor = 76;
+            break;
+          case 80:
+            roofOrientationFactor = 73;
+            break;
+          case 85:
+            roofOrientationFactor = 68;
+            break;
+          case 90:
+            roofOrientationFactor = 64;
+            break;
+        }
+        break;
+      case 'ZO':
+        switch (roofSlope) {
+          case 0:
+            roofOrientationFactor = 87;
+            break;
+          case 5:
+            roofOrientationFactor = 91;
+            break;
+          case 10:
+            roofOrientationFactor = 93;
+            break;
+          case 15:
+            roofOrientationFactor = 93;
+            break;
+          case 20:
+            roofOrientationFactor = 93;
+            break;
+          case 25:
+            roofOrientationFactor = 93;
+            break;
+          case 30:
+            roofOrientationFactor = 93;
+            break;
+          case 35:
+            roofOrientationFactor = 92;
+            break;
+          case 40:
+            roofOrientationFactor = 91;
+            break;
+          case 45:
+            roofOrientationFactor = 89;
+            break;
+          case 50:
+            roofOrientationFactor = 88;
+            break;
+          case 55:
+            roofOrientationFactor = 86;
+            break;
+          case 60:
+            roofOrientationFactor = 85;
+            break;
+          case 65:
+            roofOrientationFactor = 82;
+            break;
+          case 70:
+            roofOrientationFactor = 79;
+            break;
+          case 75:
+            roofOrientationFactor = 76;
+            break;
+          case 80:
+            roofOrientationFactor = 73;
+            break;
+          case 85:
+            roofOrientationFactor = 68;
+            break;
+          case 90:
+            roofOrientationFactor = 64;
+            break;
+        }
+        break;
+      case 'ZZO':
+        switch (roofSlope) {
+          case 0:
+            roofOrientationFactor = 87;
+            break;
+          case 5:
+            roofOrientationFactor = 91;
+            break;
+          case 10:
+            roofOrientationFactor = 95;
+            break;
+          case 15:
+            roofOrientationFactor = 97;
+            break;
+          case 20:
+            roofOrientationFactor = 98;
+            break;
+          case 25:
+            roofOrientationFactor = 99;
+            break;
+          case 30:
+            roofOrientationFactor = 100;
+            break;
+          case 35:
+            roofOrientationFactor = 100;
+            break;
+          case 40:
+            roofOrientationFactor = 99;
+            break;
+          case 45:
+            roofOrientationFactor = 98;
+            break;
+          case 50:
+            roofOrientationFactor = 97;
+            break;
+          case 55:
+            roofOrientationFactor = 95;
+            break;
+          case 60:
+            roofOrientationFactor = 93;
+            break;
+          case 65:
+            roofOrientationFactor = 90;
+            break;
+          case 70:
+            roofOrientationFactor = 87;
+            break;
+          case 75:
+            roofOrientationFactor = 84;
+            break;
+          case 80:
+            roofOrientationFactor = 80;
+            break;
+          case 85:
+            roofOrientationFactor = 76;
+            break;
+          case 90:
+            roofOrientationFactor = 71;
+            break;
+        }
+        break;
+      case 'Z':
+        switch (roofSlope) {
+          case 0:
+            roofOrientationFactor = 87;
+            break;
+          case 5:
+            roofOrientationFactor = 92;
+            break;
+          case 10:
+            roofOrientationFactor = 96;
+            break;
+          case 15:
+            roofOrientationFactor = 97;
+            break;
+          case 20:
+            roofOrientationFactor = 98;
+            break;
+          case 25:
+            roofOrientationFactor = 99;
+            break;
+          case 30:
+            roofOrientationFactor = 100;
+            break;
+          case 35:
+            roofOrientationFactor = 100;
+            break;
+          case 40:
+            roofOrientationFactor = 100;
+            break;
+          case 45:
+            roofOrientationFactor = 99;
+            break;
+          case 50:
+            roofOrientationFactor = 97;
+            break;
+          case 55:
+            roofOrientationFactor = 95;
+            break;
+          case 60:
+            roofOrientationFactor = 93;
+            break;
+          case 65:
+            roofOrientationFactor = 90;
+            break;
+          case 70:
+            roofOrientationFactor = 87;
+            break;
+          case 75:
+            roofOrientationFactor = 84;
+            break;
+          case 80:
+            roofOrientationFactor = 80;
+            break;
+          case 85:
+            roofOrientationFactor = 76;
+            break;
+          case 90:
+            roofOrientationFactor = 71;
+            break;
+        }
+        break;
+      case 'ZZW':
+        switch (roofSlope) {
+          case 0:
+            roofOrientationFactor = 87;
+            break;
+          case 5:
+            roofOrientationFactor = 91;
+            break;
+          case 10:
+            roofOrientationFactor = 95;
+            break;
+          case 15:
+            roofOrientationFactor = 97;
+            break;
+          case 20:
+            roofOrientationFactor = 98;
+            break;
+          case 25:
+            roofOrientationFactor = 98;
+            break;
+          case 30:
+            roofOrientationFactor = 98;
+            break;
+          case 35:
+            roofOrientationFactor = 98;
+            break;
+          case 40:
+            roofOrientationFactor = 98;
+            break;
+          case 45:
+            roofOrientationFactor = 97;
+            break;
+          case 50:
+            roofOrientationFactor = 95;
+            break;
+          case 55:
+            roofOrientationFactor = 93;
+            break;
+          case 60:
+            roofOrientationFactor = 90;
+            break;
+          case 65:
+            roofOrientationFactor = 88;
+            break;
+          case 70:
+            roofOrientationFactor = 85;
+            break;
+          case 75:
+            roofOrientationFactor = 82;
+            break;
+          case 80:
+            roofOrientationFactor = 78;
+            break;
+          case 85:
+            roofOrientationFactor = 74;
+            break;
+          case 90:
+            roofOrientationFactor = 70;
+        }
+        break;
+      case 'ZW':
+        switch (roofSlope) {
+          case 0:
+            roofOrientationFactor = 87;
+            break;
+          case 5:
+            roofOrientationFactor = 91;
+            break;
+          case 10:
+            roofOrientationFactor = 94;
+            break;
+          case 15:
+            roofOrientationFactor = 95;
+            break;
+          case 20:
+            roofOrientationFactor = 96;
+            break;
+          case 25:
+            roofOrientationFactor = 96;
+            break;
+          case 30:
+            roofOrientationFactor = 96;
+            break;
+          case 35:
+            roofOrientationFactor = 96;
+            break;
+          case 40:
+            roofOrientationFactor = 95;
+            break;
+          case 45:
+            roofOrientationFactor = 94;
+            break;
+          case 50:
+            roofOrientationFactor = 92;
+            break;
+          case 55:
+            roofOrientationFactor = 90;
+            break;
+          case 60:
+            roofOrientationFactor = 87;
+            break;
+          case 65:
+            roofOrientationFactor = 85;
+            break;
+          case 70:
+            roofOrientationFactor = 82;
+            break;
+          case 75:
+            roofOrientationFactor = 79;
+            break;
+          case 80:
+            roofOrientationFactor = 75;
+            break;
+          case 85:
+            roofOrientationFactor = 71;
+            break;
+          case 90:
+            roofOrientationFactor = 67;
+            break;
+        }
+        break;
+      case 'ZWW':
+        switch (roofSlope) {
+          case 0:
+            roofOrientationFactor = 87;
+            break;
+          case 5:
+            roofOrientationFactor = 89;
+            break;
+          case 10:
+            roofOrientationFactor = 91;
+            break;
+          case 15:
+            roofOrientationFactor = 92;
+            break;
+          case 20:
+            roofOrientationFactor = 91;
+            break;
+          case 25:
+            roofOrientationFactor = 91;
+            break;
+          case 30:
+            roofOrientationFactor = 90;
+            break;
+          case 35:
+            roofOrientationFactor = 89;
+            break;
+          case 40:
+            roofOrientationFactor = 87;
+            break;
+          case 45:
+            roofOrientationFactor = 86;
+            break;
+          case 50:
+            roofOrientationFactor = 85;
+            break;
+          case 55:
+            roofOrientationFactor = 83;
+            break;
+          case 60:
+            roofOrientationFactor = 81;
+            break;
+          case 65:
+            roofOrientationFactor = 78;
+            break;
+          case 70:
+            roofOrientationFactor = 75;
+            break;
+          case 75:
+            roofOrientationFactor = 72;
+            break;
+          case 80:
+            roofOrientationFactor = 69;
+            break;
+          case 85:
+            roofOrientationFactor = 65;
+            break;
+          case 90:
+            roofOrientationFactor = 61;
+            break;
+        }
+        break;
+      case 'W':
+        switch (roofSlope) {
+          case 0:
+            roofOrientationFactor = 87;
+            break;
+          case 5:
+            roofOrientationFactor = 88;
+            break;
+          case 10:
+            roofOrientationFactor = 89;
+            break;
+          case 15:
+            roofOrientationFactor = 88;
+            break;
+          case 20:
+            roofOrientationFactor = 87;
+            break;
+          case 25:
+            roofOrientationFactor = 87;
+            break;
+          case 30:
+            roofOrientationFactor = 86;
+            break;
+          case 35:
+            roofOrientationFactor = 84;
+            break;
+          case 40:
+            roofOrientationFactor = 82;
+            break;
+          case 45:
+            roofOrientationFactor = 80;
+            break;
+          case 50:
+            roofOrientationFactor = 78;
+            break;
+          case 55:
+            roofOrientationFactor = 76;
+            break;
+          case 60:
+            roofOrientationFactor = 74;
+            break;
+          case 65:
+            roofOrientationFactor = 72;
+            break;
+          case 70:
+            roofOrientationFactor = 69;
+            break;
+          case 75:
+            roofOrientationFactor = 66;
+            break;
+          case 80:
+            roofOrientationFactor = 63;
+            break;
+          case 85:
+            roofOrientationFactor = 60;
+            break;
+          case 90:
+            roofOrientationFactor = 57;
+            break;
+        }
+        break;
+    }
+    const energyProduction = (systemPower * (roofOrientationFactor / 100) * 0.975).toFixed(0);
+    return [{
+      label: 'Orientatie',
+      value: roofOrientation
+    }, {
+      label: 'Hellingshoek',
+      value: roofSlope
+    }, {
+      label: 'Orientatiefactor',
+      value: roofOrientationFactor + '%'
+    }, {
+      label: 'Elektriciteitsproductie',
+      value: energyProduction + ' kWh/jaar'
+    }];
+  }.property()
+
 });
