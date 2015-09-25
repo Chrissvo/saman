@@ -73,4 +73,85 @@ export default Ember.Controller.extend({
       value: systemPower + ' Watt piek'
     }];
   }.property(),
+
+  EIA: function() {
+    const connection = this.get('model.company.connection');
+    if (connection === "Aansluiting groter dan 3x80A") {
+      return 0;
+    }
+
+    const panelPrice = this.get('model.system.panelPrice');
+    const panelAmount = this.get('model.system.panelAmount');
+    const panelPower = this.get('model.system.panelPower');
+    const systemPower = panelAmount * panelPower;
+    const brutoInvestment = panelPrice * systemPower;
+    if (systemPower > 25000 && brutoInvestment > 2300) {
+      return (brutoInvestment - 25000 * panelPrice) * 0.415;
+    }
+    return 0;
+  }.property(),
+
+  KIA: function() {
+    const otherInvestments = this.get('model.company.otherInvestments');
+    const panelPrice = this.get('model.system.panelPrice');
+    const panelAmount = this.get('model.system.panelAmount');
+    const panelPower = this.get('model.system.panelPower');
+    const systemPower = panelAmount * panelPower;
+    const brutoInvestment = panelPrice * systemPower;
+    const totalInvestment = brutoInvestment + otherInvestments;
+
+    if (totalInvestment <= 2300) {
+      return 0;
+    }
+    else if (totalInvestment <= 55248) {
+      return brutoInvestment * 0.28;
+    }
+    else if (totalInvestment <= 102311) {
+      // other investments eat up the return
+      if (otherInvestments > 15470) {
+        return 0
+      }
+      else {
+        return 15470 - otherInvestments;
+      }
+    }
+    else if (totalInvestment <= 306931) {
+      // other investments eat up the return
+      if (otherInvestments > 15470 - 0.756 * totalInvestment) {
+        return 0;
+      }
+      else {
+        return 15470 - 0.756 * totalInvestment;
+      }
+    }
+    return 0;
+  }.property(),
+
+  taxRate: function() {
+    const incomeCategory = this.get('model.company.incomeCategory');
+    let taxRate = 0;
+    if (incomeCategory !== undefined) {
+      switch (incomeCategory) {
+        case '€ 0 - € 18.628':
+          taxRate = 0.33;
+          break;
+        case '€ 18.628 - € 33.436':
+          taxRate = 0.4195;
+          break;
+        case '€ 33.436 - € 55.694':
+          taxRate = 0.42;
+          break;
+        case '€ 55.694 en hoger':
+          taxRate = 0.52;
+          break;
+        case 'minder dan € 200.000':
+          taxRate = 0.20;
+          break;
+        case 'meer dan € 200.000':
+          taxRate = 0.25;
+          break;
+      }
+    }
+    return taxRate;
+  }.property(),
 });
