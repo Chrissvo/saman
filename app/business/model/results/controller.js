@@ -57,4 +57,20 @@ export default Ember.Controller.extend({
       value: '€ ' + ((totalEnergyTax + energyCost) / energyUsage).toFixed(3)
     }];
   }.property(),
+
+  solarData: function() {
+    const panelAmount = this.get('model.system.panelAmount');
+    const panelPower = this.get('model.system.panelPower');
+    const systemPower = panelAmount * panelPower;
+    return [{
+      label: 'Aantal te plaatsen panelen',
+      value: panelAmount + ' stuks'
+    }, {
+      label: 'Vermogen per paneel',
+      value: panelPower + ' Watt piek'
+    }, {
+      label: 'Totaal vermogen',
+      value: systemPower + ' Watt piek'
+    }];
+  }.property(),
 });
