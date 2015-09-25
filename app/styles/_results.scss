@@ -1,0 +1,8 @@
+.box-result-left,
+.box-result-right {
+  @media screen and (min-width: $break-small) {
+    @include columns(2, 2%);
+    vertical-align: top;
+    margin: 0;
+  }
+}
