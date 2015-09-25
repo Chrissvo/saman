@@ -17,6 +17,12 @@ body {
     text-transform: uppercase;
     word-break: break-word;
   }
+  h3 {
+    color: $h3;
+    text-transform: uppercase;
+    word-break: break-word;
+    font-weight: 200;
+  }
   a {
     text-decoration: none;
     color: inherit;
