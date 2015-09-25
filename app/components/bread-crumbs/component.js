@@ -14,14 +14,23 @@ export default Ember.Component.extend({
         breadCrumbs = [''];
         break;
       case 'business.model.index':
-        breadCrumbs = ['Zakelijk Rekenmodel'];
+        breadCrumbs = [{
+          label: 'Zakelijk Rekenmodel'
+        }];
         break;
       case 'business.model.results':
         this.set('multiple', true);
-        breadCrumbs = ['Zakelijk Rekenmodel', 'Resultaten'];
+        breadCrumbs = [{
+          label: 'Zakelijk Rekenmodel',
+          route: 'business.model.index'
+        }, {
+          label: 'Resultaten'
+        }];
         break;
       case 'search':
-        breadCrumbs = ['Model Ophalen'];
+        breadCrumbs = [{
+          label: 'Model Ophalen'
+        }];
         break;
     }
     return breadCrumbs;

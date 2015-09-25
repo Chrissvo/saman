@@ -4,7 +4,11 @@
     {{#if (not-eq currentPath "index")}}
       {{#each breadCrumbs as |breadCrumb|}}
         <li class="chevron">></li>
-        <li>{{breadCrumb}}</li>
+        {{#if breadCrumb.route}}
+          <li>{{#link-to breadCrumb.route}}{{breadCrumb.label}}{{/link-to}}</li>
+        {{else}}
+          <li>{{breadCrumb.label}}</li>
+        {{/if}}
       {{/each}}
     {{/if}}
   </ul>
