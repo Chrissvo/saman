@@ -26,4 +26,35 @@ export default Ember.Controller.extend({
     }];
   }.property(),
 
+  energyData: function() {
+    const energyUsage = this.get('model.company.energyUsage');
+    const energyPrice = this.get('model.company.energyPrice');
+    const energyCost = energyUsage * energyPrice;
+
+    let energyTax = 0.1196;
+    if (energyUsage > 10000) {
+      energyTax = 0.0469;
+    }
+    else if (energyUsage > 50000) {
+      energyTax = 0.0125;
+    }
+    let totalEnergyTax = energyTax * energyUsage;
+
+    return [{
+      label: 'Netto energiekosten',
+      value: '€ ' + (energyCost).toFixed(2)
+    }, {
+      label: 'Totale energiebelasting',
+      value: '€ ' + totalEnergyTax.toFixed(2)
+    }, {
+      label: 'Totale energiekosten',
+      value: '€ ' + (totalEnergyTax + energyCost).toFixed(2)
+    }, {
+      label: 'Energiebelasting',
+      value: '€ ' + energyTax.toFixed(3)
+    }, {
+      label: 'Bruto energieprijs',
+      value: '€ ' + ((totalEnergyTax + energyCost) / energyUsage).toFixed(3)
+    }];
+  }.property(),
 });
