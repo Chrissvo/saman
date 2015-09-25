@@ -154,4 +154,52 @@ export default Ember.Controller.extend({
     }
     return taxRate;
   }.property(),
+
+  investmentData: function() {
+    const panelPrice = this.get('model.system.panelPrice');
+    const panelAmount = this.get('model.system.panelAmount');
+    const panelPower = this.get('model.system.panelPower');
+    const systemPower = panelAmount * panelPower;
+    const brutoInvestment = panelPrice * systemPower;
+    const totalTax = this.get('EIA') + this.get('KIA') + brutoInvestment;
+    const netInvestment = brutoInvestment - totalTax * this.get('taxRate');
+
+    return [{
+      label: 'Kosten per wp',
+      value: '€ ' + panelPrice.toFixed(2)
+    }, {
+      label: 'Bruto investering',
+      value: '€ ' + brutoInvestment.toFixed(2)
+    }, {
+      label: 'Netto fiscaal voordeel',
+      value: '€ ' + totalTax.toFixed(2)
+    }, {
+      label: 'Netto investering',
+      value: '€ ' + netInvestment.toFixed(2)
+    }];
+  }.property(),
+
+  savingsData: function() {
+
+  }.property(),
+
+  sdeData: function() {
+
+  }.property(),
+
+  eiaData: function() {
+
+  }.property(),
+
+  kiaData: function() {
+
+  }.property(),
+
+  depreciationData: function() {
+
+  }.property(),
+
+  taxData: function() {
+
+  }.property(),
 });
