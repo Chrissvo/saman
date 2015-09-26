@@ -104,6 +104,39 @@ export default Ember.Controller.extend({
     }
     return 0;
   }.property(),
+
+  solarKIA: function() {
+    const otherInvestments = this.get('model.company.otherInvestments');
+    const systemPower = this.get('systemPower');
+    const grossInvestment = this.get('grossInvestment');
+    const totalInvestment = grossInvestment + otherInvestments;
+
+    if (totalInvestment <= 2300) {
+      return 0;
+    }
+    else if (totalInvestment <= 55248) {
+      return grossInvestment * 0.28;
+    }
+    else if (totalInvestment <= 102311) {
+      if (otherInvestments > 15470) {
+        // other investments eat up the return
+        return 0;
+      }
+      else {
+        return 15470 - otherInvestments;
+      }
+    }
+    else if (totalInvestment <= 306931) {
+      if (otherInvestments > 15470 - 0.756 * totalInvestment) {
+        // other investments eat up the return
+        return 0;
+      }
+      else {
+        return 15470 - 0.756 * otherInvestments;
+      }
+    }
+    return 0;
+  }.property(),
   situationData: function() {
     return [{
       label: 'Juridische bedrijfsvorm',
