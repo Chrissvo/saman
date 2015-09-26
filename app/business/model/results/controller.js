@@ -254,15 +254,8 @@ export default Ember.Controller.extend({
     const energyUsage = this.get('model.company.energyUsage');
     const energyPrice = this.get('model.company.energyPrice');
     const energyCost = energyUsage * energyPrice;
-
-    let energyTax = 0.1196;
-    if (energyUsage > 10000) {
-      energyTax = 0.0469;
-    }
-    else if (energyUsage > 50000) {
-      energyTax = 0.0125;
-    }
-    let totalEnergyTax = energyTax * energyUsage;
+    const energyTax = this.get('energyTax');
+    const totalEnergyTax = this.get('totalEnergyTax');
 
     return [{
       label: 'Netto energiekosten',
