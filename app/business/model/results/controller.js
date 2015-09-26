@@ -207,6 +207,12 @@ export default Ember.Controller.extend({
     }
     return 0;
   }.property(),
+
+  sdeLifeContribution: function() {
+    const energyProduction = this.get('energyProduction');
+    const sdeContribution = this.get('sdeContribution');
+    return energyProduction * sdeContribution * 15;
+  }.property(),
   situationData: function() {
     return [{
       label: 'Juridische bedrijfsvorm',
