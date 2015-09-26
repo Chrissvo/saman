@@ -16,6 +16,12 @@ export default Ember.Controller.extend({
     const roofOrientationFactor = this.get('roofOrientationFactor');
     return systemPower * (roofOrientationFactor / 100) * 0.975;
   }.property(),
+
+  grossInvestment: function() {
+    const panelPrice = this.get('model.system.panelPrice');
+    const systemPower = this.get('systemPower');
+    return panelPrice * systemPower;
+  }.property(),
   situationData: function() {
     return [{
       label: 'Juridische bedrijfsvorm',
