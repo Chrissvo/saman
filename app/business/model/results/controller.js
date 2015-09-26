@@ -90,6 +90,20 @@ export default Ember.Controller.extend({
     }
     return taxRate;
   }.property(),
+
+  EIA: function() {
+    const connection = this.get('model.company.connection');
+    if (connection === "Aansluiting groter dan 3x80A") {
+      return 0;
+    }
+
+    const systemPower = this.get('systemPower');
+    const grossInvestment = this.get('grossInvestment');
+    if (systemPower > 25000 && grossInvestment > 2300) {
+      return (grossInvestment - 25000 * panelPrice) * 0.415;
+    }
+    return 0;
+  }.property(),
   situationData: function() {
     return [{
       label: 'Juridische bedrijfsvorm',
