@@ -447,7 +447,27 @@ export default Ember.Controller.extend({
   }.property(),
 
   eiaData: function() {
+    const grossInvestment = this.get('grossInvestment');
+    const connection = this.get('model.company.connection');
+    const systemPower = this.get('systemPower');
+    let eiaPercentage = 0;
+    if (connection === 'Aansluiting kleiner dan of gelijk aan 3x80A' &&
+      systemPower > 25000 && grossInvestment > 2300) {
+      eiaPercentage = 0.415;
+    }
 
+    const EIA = this.get('EIA');
+
+    return [{
+      label: 'Percentage aftrekbaar',
+      value: eiaPercentage * 100 + '%'
+    }, {
+      label: 'Bruto investering excl. BTW',
+      value: '€ '+ grossInvestment.toFixed(2)
+    }, {
+      label: 'EIA aftrek 2015',
+      value: '€ ' + EIA.toFixed(2)
+    }];
   }.property(),
 
   kiaData: function() {
