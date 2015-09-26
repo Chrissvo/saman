@@ -92,6 +92,7 @@ export default Ember.Controller.extend({
   }.property(),
 
   EIA: function() {
+    const panelPrice = this.get('model.system.panelPrice');
     const connection = this.get('model.company.connection');
     if (connection === "Aansluiting groter dan 3x80A") {
       return 0;
@@ -107,7 +108,6 @@ export default Ember.Controller.extend({
 
   solarKIA: function() {
     const otherInvestments = this.get('model.company.otherInvestments');
-    const systemPower = this.get('systemPower');
     const grossInvestment = this.get('grossInvestment');
     const totalInvestment = grossInvestment + otherInvestments;
 
@@ -140,7 +140,6 @@ export default Ember.Controller.extend({
 
   KIA: function() {
     const otherInvestments = this.get('model.company.otherInvestments');
-    const systemPower = this.get('systemPower');
     const grossInvestment = this.get('grossInvestment');
     const totalInvestment = grossInvestment + otherInvestments;
 
@@ -319,7 +318,6 @@ export default Ember.Controller.extend({
     const energyProduction = this.get('energyProduction');
     const energyUsage = this.get('model.company.energyUsage');
     const energyPrice = this.get('model.company.energyPrice');
-    const energyCost = energyUsage * energyPrice;
     const factorOwnUsage = this.get('model.company.factorOwnUsage');
     const connection = this.get('model.company.connection');
     const totalEnergyTax = this.get('totalEnergyTax');
@@ -345,7 +343,7 @@ export default Ember.Controller.extend({
           }
           else {
             // production is smaller than usage in the 2nd bracket
-            energyTaxSaving = taxBracket3 + taxBracket2 - ((energyUsage - energyProduction ) * 0.0469)
+            energyTaxSaving = taxBracket3 + taxBracket2 - ((energyUsage - energyProduction ) * 0.0469);
           }
         }
         else {
@@ -360,7 +358,7 @@ export default Ember.Controller.extend({
         }
         else {
           // production is smaller than usage in the 2nd bracket
-          energyTaxSaving =  taxBracket2 - ((energyUsage - energyProduction ) * 0.0469)
+          energyTaxSaving =  taxBracket2 - ((energyUsage - energyProduction ) * 0.0469);
         }
       }
       else {
@@ -493,10 +491,10 @@ export default Ember.Controller.extend({
     }
     else if (totalInvestment <= 306931) {
       investmentCategory = '€ 102.311 - € 306.931';
-      taxRume = '€ 15.470 aftrekbaar - 7,56% investering > € 102.311'
+      taxRule = '€ 15.470 aftrekbaar - 7,56% investering > € 102.311';
     }
     else if (totalInvestment > 306931) {
-      investmentCategory = 'meer dan € 306.931'
+      investmentCategory = 'meer dan € 306.931';
       taxRule = 'niets aftrekbaar';
     }
 
@@ -538,7 +536,7 @@ export default Ember.Controller.extend({
     }, {
       label: 'Afschrijving 2016-2024 (25%)',
       value: '€ ' + restDepreciation.toFixed(2)
-    }]
+    }];
   }.property(),
 
   taxDeductionData: function() {
@@ -575,7 +573,6 @@ export default Ember.Controller.extend({
   }.property(),
 
   revenueData: function() {
-    const systemPower = this.get('systemPower');
     const roofOrientation = this.get('model.system.roofOrientation');
     const roofSlope = this.get('model.system.roofSlope');
     const roofOrientationFactor = this.get('roofOrientationFactor');
