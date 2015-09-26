@@ -158,6 +158,41 @@ export default Ember.Controller.extend({
     }
     return 0;
   }.property(),
+
+  sdeBaseAmount: function() {
+    const sdePhase = this.get('model.system.sdePhase');
+    let baseAmount;
+    switch (sdePhase) {
+      case 'Fase 1 (vanaf 31 maart)':
+        baseAmount = 0.070;
+        break;
+      case 'Fase 2 (vanaf 20 april)':
+        baseAmount = 0.080;
+        break;
+      case 'Fase 3 (vanaf 11 mei)':
+        baseAmount = 0.090;
+        break;
+      case 'Fase 4 (vanaf 1 juni)':
+        baseAmount = 0.100;
+        break;
+      case 'Fase 5 (vanaf 22 juni)':
+        baseAmount = 0.110;
+        break;
+      case 'Fase 6 (vanaf 31 augustus)':
+        baseAmount = 0.120;
+        break;
+      case 'Fase 7 (vanaf 21 september)':
+        baseAmount = 0.130;
+        break;
+      case 'Fase 8 (vanaf 12 oktober)':
+        baseAmount = 0.140;
+        break;
+      case 'Fase 9 (vanaf 9 november)':
+        baseAmount = 0.141;
+        break;    
+    }
+    return baseAmount;
+  }.property(),
   situationData: function() {
     return [{
       label: 'Juridische bedrijfsvorm',
