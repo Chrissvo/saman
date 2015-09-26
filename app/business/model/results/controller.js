@@ -10,6 +10,12 @@ export default Ember.Controller.extend({
     const panelPower = this.get('model.system.panelPower');
     return panelAmount * panelPower;
   }.property(),
+
+  energyProduction: function() {
+    const systemPower = this.get('systemPower');
+    const roofOrientationFactor = this.get('roofOrientationFactor');
+    return systemPower * (roofOrientationFactor / 100) * 0.975;
+  }.property(),
   situationData: function() {
     return [{
       label: 'Juridische bedrijfsvorm',
