@@ -312,14 +312,6 @@ export default Ember.Controller.extend({
     }];
   }.property(),
 
-  KIA: function() {
-    const otherInvestments = this.get('model.company.otherInvestments');
-    const panelPrice = this.get('model.system.panelPrice');
-    const panelAmount = this.get('model.system.panelAmount');
-    const panelPower = this.get('model.system.panelPower');
-    const systemPower = panelAmount * panelPower;
-    const brutoInvestment = panelPrice * systemPower;
-    const totalInvestment = brutoInvestment + otherInvestments;
   savingsData: function() {
     const sdeContribution = this.get('sdeContribution');
     const sdeBaseAmount = this.get('sdeBaseAmount');
@@ -338,14 +330,10 @@ export default Ember.Controller.extend({
     const totalTaxDeduction = this.get('totalTaxDeduction');
     const netInvestment = grossInvestment - totalTaxDeduction;
 
-    if (totalInvestment <= 2300) {
-      return 0;
     let energyTaxSaving;
     if (energyProduction > energyUsage) {
       energyTaxSaving = totalEnergyTax;
     }
-    else if (totalInvestment <= 55248) {
-      return brutoInvestment * 0.28;
     else {
       // production is smaller than current usage
       if (taxBracket3 > 0) {
@@ -380,10 +368,6 @@ export default Ember.Controller.extend({
         energyTaxSaving = energyProduction * 0.1196;
       }
     }
-    else if (totalInvestment <= 102311) {
-      // other investments eat up the return
-      if (otherInvestments > 15470) {
-        return 0
 
     let productionSavings;
     if (connection === 'Aansluiting groter dan 3x80A') {
@@ -391,49 +375,18 @@ export default Ember.Controller.extend({
         productionSavings = energyProduction * sdeBaseAmount;
       }
       else {
-        return 15470 - otherInvestments;
         productionSavings = energyProduction * apxPrice;
       }
     }
-    else if (totalInvestment <= 306931) {
-      // other investments eat up the return
-      if (otherInvestments > 15470 - 0.756 * totalInvestment) {
-        return 0;
     else {
       if (energyProduction > energyUsage) {
         productionSavings = energyUsage * energyPrice + (energyProduction - energyUsage) * apxPrice + totalEnergyTax;
       }
       else {
-        return 15470 - 0.756 * totalInvestment;
         productionSavings = energyProduction * energyPrice + energyTaxSaving;
       }
     }
-    return 0;
-  }.property(),
 
-  taxRate: function() {
-    const incomeCategory = this.get('model.company.incomeCategory');
-    let taxRate = 0;
-    if (incomeCategory !== undefined) {
-      switch (incomeCategory) {
-        case '€ 0 - € 18.628':
-          taxRate = 0.33;
-          break;
-        case '€ 18.628 - € 33.436':
-          taxRate = 0.4195;
-          break;
-        case '€ 33.436 - € 55.694':
-          taxRate = 0.42;
-          break;
-        case '€ 55.694 en hoger':
-          taxRate = 0.52;
-          break;
-        case 'minder dan € 200.000':
-          taxRate = 0.20;
-          break;
-        case 'meer dan € 200.000':
-          taxRate = 0.25;
-          break;
     let personalSavings;
     if (connection === 'Aansluiting kleiner dan of gelijk aan 3x80A') {
       personalSavings = 0;
@@ -446,48 +399,26 @@ export default Ember.Controller.extend({
         personalSavings = energyProduction * (factorOwnUsage / 100) * (energyPrice - apxPrice) + energyTaxSaving;
       }
     }
-    return taxRate;
-  }.property(),
 
-  investmentData: function() {
-    const panelPrice = this.get('model.system.panelPrice');
-    const panelAmount = this.get('model.system.panelAmount');
-    const panelPower = this.get('model.system.panelPower');
-    const systemPower = panelAmount * panelPower;
-    const brutoInvestment = panelPrice * systemPower;
-    const totalTax = this.get('EIA') + this.get('KIA') + brutoInvestment;
-    const netInvestment = brutoInvestment - totalTax * this.get('taxRate');
     const returnTime = netInvestment / (productionSavings + personalSavings);
     const ROI = 1 / returnTime * 100;
 
     return [{
-      label: 'Kosten per wp',
-      value: '€ ' + panelPrice.toFixed(2)
       label: 'Opbrengst energieproductie',
       value: '€ ' + productionSavings.toFixed(2) + ' per jaar'
     }, {
-      label: 'Bruto investering',
-      value: '€ ' + brutoInvestment.toFixed(2)
       label: 'Besparing eigen verbruik',
       value: '€ ' + personalSavings.toFixed(2) + ' per jaar'
     }, {
-      label: 'Netto fiscaal voordeel',
-      value: '€ ' + totalTax.toFixed(2)
       label: 'Totale jaarlijkse besparing',
       value: '€ ' + (productionSavings + personalSavings).toFixed(2) + ' per jaar'
     }, {
-      label: 'Netto investering',
-      value: '€ ' + netInvestment.toFixed(2)
       label: 'Terugverdientijd',
       value: returnTime.toFixed(1) + ' jaar'
     }, {
       label: 'Rendement',
       value: ROI.toFixed(1) + '%'
     }];
-  }.property(),
-
-  savingsData: function() {
-
   }.property(),
 
   sdeData: function() {
