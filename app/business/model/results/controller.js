@@ -193,6 +193,20 @@ export default Ember.Controller.extend({
     }
     return baseAmount;
   }.property(),
+
+  sdeContribution: function() {
+    const connection = this.get('model.company.connection');
+    const systemPower = this.get('systemPower');
+    const apxPrice = this.get('model.system.apxPrice');
+    const sdeBaseAmount = this.get('sdeBaseAmount');
+    if (systemPower >= 15000 && connection === 'Aansluiting groter dan 3x80A') {
+      if (apxPrice > 0.035) {
+        return sdeBaseAmount - apxPrice;
+      }
+      return sdeBaseAmount - 0.035;
+    }
+    return 0;
+  }.property(),
   situationData: function() {
     return [{
       label: 'Juridische bedrijfsvorm',
