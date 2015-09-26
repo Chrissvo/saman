@@ -22,6 +22,33 @@ export default Ember.Controller.extend({
     const systemPower = this.get('systemPower');
     return panelPrice * systemPower;
   }.property(),
+
+  energyTaxBracket1: function() {
+    const energyUsage = this.get('model.company.energyUsage');
+    if (energyUsage > 10000) {
+      return 10000 * 0.1196;
+    }
+    return energyUsage * 0.1196;
+  }.property(),
+
+  energyTaxBracket2: function() {
+    const energyUsage = this.get('model.company.energyUsage');
+    if (energyUsage > 50000) {
+      return 40000 * 0.0469;
+    }
+    else if (energyUsage <= 10000) {
+      return 0;
+    }
+    return (energyUsage - 10000) * 0.0469;
+  }.property(),
+
+  energyTaxBracket3: function() {
+    const energyUsage = this.get('model.company.energyUsage');
+    if (energyUsage > 50000) {
+      return (energyUsage - 50000) * 0.0125;
+    }
+    return 0;
+  }.property(),
   situationData: function() {
     return [{
       label: 'Juridische bedrijfsvorm',
