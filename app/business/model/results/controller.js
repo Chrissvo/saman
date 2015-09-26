@@ -213,6 +213,19 @@ export default Ember.Controller.extend({
     const sdeContribution = this.get('sdeContribution');
     return energyProduction * sdeContribution * 15;
   }.property(),
+
+  totalTaxDeduction: function() {
+    const EIA = this.get('EIA');
+    const solarKIA = this.get('solarKIA');
+    const grossInvestment = this.get('grossInvestment');
+    const initialDepreciationPercentage = this.get('initialDepreciationPercentage');
+    const initialTaxDeduction = EIA + solarKIA + grossInvestment * initialDepreciationPercentage;
+    const restTaxDeduction = grossInvestment * (1 - initialDepreciationPercentage);
+    const taxRate = this.get('taxRate');
+    const initialFiscalAdvantage = initialTaxDeduction * taxRate;
+    const restFiscalAdvantage = restTaxDeduction * taxRate;
+    return initialFiscalAdvantage + restFiscalAdvantage;
+  }.property(),
   situationData: function() {
     return [{
       label: 'Juridische bedrijfsvorm',
