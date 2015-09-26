@@ -278,7 +278,7 @@ export default Ember.Controller.extend({
   solarData: function() {
     const panelAmount = this.get('model.system.panelAmount');
     const panelPower = this.get('model.system.panelPower');
-    const systemPower = panelAmount * panelPower;
+    const systemPower = this.get('systemPower');
     return [{
       label: 'Aantal te plaatsen panelen',
       value: panelAmount + ' stuks'
