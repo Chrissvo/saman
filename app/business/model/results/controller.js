@@ -422,7 +422,28 @@ export default Ember.Controller.extend({
   }.property(),
 
   sdeData: function() {
+    const sdePhase = this.get('model.system.sdePhase');
+    const sdeBaseAmount = this.get('sdeBaseAmount');
+    const apxPrice = this.get('model.system.apxPrice');
+    const sdeContribution = this.get('sdeContribution');
+    const sdeLifeContribution = this.get('sdeLifeContribution');
 
+    return [{
+      label: 'Inschrijffase',
+      value: sdePhase
+    }, {
+      label: 'Basisbedrag',
+      value: sdeBaseAmount.toFixed(3) + ' per kWh'
+    }, {
+      label: 'APX energieprijs',
+      value: apxPrice.toFixed(3) + ' per kWh'
+    }, {
+      label: 'SDE+ bijdrage',
+      value: sdeContribution.toFixed(3) + ' per kWh'
+    }, {
+      label: 'SDE+ bijdrage over 15 jaar',
+      value: sdeLifeContribution.toFixed(2)
+    }];
   }.property(),
 
   eiaData: function() {
