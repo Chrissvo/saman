@@ -575,9 +575,25 @@ export default Ember.Controller.extend({
   }.property(),
 
   revenueData: function() {
-    const panelAmount = this.get('model.system.panelAmount');
-    const panelPower = this.get('model.system.panelPower');
-    const systemPower = panelAmount * panelPower;
+    const systemPower = this.get('systemPower');
+    const roofOrientation = this.get('model.system.roofOrientation');
+    const roofSlope = this.get('model.system.roofSlope');
+    const roofOrientationFactor = this.get('roofOrientationFactor');
+    const energyProduction = this.get('energyProduction');
+    return [{
+      label: 'Orientatie',
+      value: roofOrientation
+    }, {
+      label: 'Hellingshoek',
+      value: roofSlope
+    }, {
+      label: 'Orientatiefactor',
+      value: roofOrientationFactor + '%'
+    }, {
+      label: 'Elektriciteitsproductie',
+      value: energyProduction.toFixed(0) + ' kWh/jaar'
+    }];
+  }.property(),
     const roofOrientation = this.get('model.system.roofOrientation');
     const roofSlope = this.get('model.system.roofSlope');
     let roofOrientationFactor = 87;
