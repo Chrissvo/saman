@@ -49,6 +49,13 @@ export default Ember.Controller.extend({
     }
     return 0;
   }.property(),
+
+  totalEnergyTax: function() {
+    const energyTaxBracket1 = this.get('energyTaxBracket1');
+    const energyTaxBracket2 = this.get('energyTaxBracket2');
+    const energyTaxBracket3 = this.get('energyTaxBracket3');
+    return energyTaxBracket1 + energyTaxBracket2 + energyTaxBracket3;
+  }.property(),
   situationData: function() {
     return [{
       label: 'Juridische bedrijfsvorm',
