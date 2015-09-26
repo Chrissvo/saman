@@ -594,6 +594,9 @@ export default Ember.Controller.extend({
       value: energyProduction.toFixed(0) + ' kWh/jaar'
     }];
   }.property(),
+
+  // roofOrientationFactor for lack of a better solution
+  roofOrientationFactor: function() {
     const roofOrientation = this.get('model.system.roofOrientation');
     const roofSlope = this.get('model.system.roofSlope');
     let roofOrientationFactor = 87;
