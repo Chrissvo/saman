@@ -62,6 +62,34 @@ export default Ember.Controller.extend({
     const energyUsage = this.get('model.company.energyUsage');
     return totalEnergyTax / energyUsage;
   }.property(),
+      
+  taxRate: function() {
+    const incomeCategory = this.get('model.company.incomeCategory');
+    let taxRate = 0;
+    if (incomeCategory !== undefined) {
+      switch (incomeCategory) {
+        case '€ 0 - € 18.628':
+          taxRate = 0.33;
+          break;
+        case '€ 18.628 - € 33.436':
+          taxRate = 0.4195;
+          break;
+        case '€ 33.436 - € 55.694':
+          taxRate = 0.42;
+          break;
+        case '€ 55.694 en hoger':
+          taxRate = 0.52;
+          break;
+        case 'minder dan € 200.000':
+          taxRate = 0.20;
+          break;
+        case 'meer dan € 200.000':
+          taxRate = 0.25;
+          break;
+      }
+    }
+    return taxRate;
+  }.property(),
   situationData: function() {
     return [{
       label: 'Juridische bedrijfsvorm',
