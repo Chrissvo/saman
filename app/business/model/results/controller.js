@@ -1150,20 +1150,7 @@ export default Ember.Controller.extend({
         }
         break;
     }
-    const energyProduction = (systemPower * (roofOrientationFactor / 100) * 0.975).toFixed(0);
-    return [{
-      label: 'Orientatie',
-      value: roofOrientation
-    }, {
-      label: 'Hellingshoek',
-      value: roofSlope
-    }, {
-      label: 'Orientatiefactor',
-      value: roofOrientationFactor + '%'
-    }, {
-      label: 'Elektriciteitsproductie',
-      value: energyProduction + ' kWh/jaar'
-    }];
+    return roofOrientationFactor;
   }.property()
 
 });
