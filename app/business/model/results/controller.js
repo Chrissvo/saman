@@ -291,12 +291,6 @@ export default Ember.Controller.extend({
     }];
   }.property(),
 
-  EIA: function() {
-    const connection = this.get('model.company.connection');
-    if (connection === "Aansluiting groter dan 3x80A") {
-      return 0;
-    }
-
     const panelPrice = this.get('model.system.panelPrice');
     const panelAmount = this.get('model.system.panelAmount');
     const panelPower = this.get('model.system.panelPower');
