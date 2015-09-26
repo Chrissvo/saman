@@ -541,8 +541,37 @@ export default Ember.Controller.extend({
     }]
   }.property(),
 
-  taxData: function() {
+  taxDeductionData: function() {
+    const EIA = this.get('EIA');
+    const solarKIA = this.get('solarKIA');
+    const grossInvestment = this.get('grossInvestment');
+    const initialDepreciationPercentage = this.get('initialDepreciationPercentage');
+    const initialTaxDeduction = EIA + solarKIA + grossInvestment * initialDepreciationPercentage;
+    const restTaxDeduction = grossInvestment * (1 - initialDepreciationPercentage);
+    const taxRate = this.get('taxRate');
+    const initialFiscalAdvantage = initialTaxDeduction * taxRate;
+    const restFiscalAdvantage = restTaxDeduction * taxRate;
+    const totalFiscalAdvantage = initialFiscalAdvantage + restFiscalAdvantage;
 
+    return [{
+      label: 'Totaal aftrekposten 2015',
+      value: '€ ' + initialTaxDeduction.toFixed(2)
+    }, {
+      label: 'Totaal aftrekposten 2016-2024',
+      value: '€ ' + restTaxDeduction.toFixed(2)
+    }, {
+      label: 'Belastingtarief',
+      value: taxRate * 100 + '%'
+    }, {
+      label: 'Fiscaal voordeel 2015',
+      value: '€ ' + initialFiscalAdvantage.toFixed(2)
+    }, {
+      label: 'Fiscaal voordeel 2016-2024',
+      value: '€ ' + restFiscalAdvantage.toFixed(2)
+    }, {
+      label: 'Netto fiscaal voordeel',
+      value: '€ ' + totalFiscalAdvantage.toFixed(2)
+    }];
   }.property(),
 
   revenueData: function() {
