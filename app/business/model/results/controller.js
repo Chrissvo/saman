@@ -320,29 +320,92 @@ export default Ember.Controller.extend({
     const systemPower = panelAmount * panelPower;
     const brutoInvestment = panelPrice * systemPower;
     const totalInvestment = brutoInvestment + otherInvestments;
+  savingsData: function() {
+    const sdeContribution = this.get('sdeContribution');
+    const sdeBaseAmount = this.get('sdeBaseAmount');
+    const apxPrice = this.get('model.system.apxPrice');
+    const energyProduction = this.get('energyProduction');
+    const energyUsage = this.get('model.company.energyUsage');
+    const energyPrice = this.get('model.company.energyPrice');
+    const energyCost = energyUsage * energyPrice;
+    const factorOwnUsage = this.get('model.company.factorOwnUsage');
+    const connection = this.get('model.company.connection');
+    const totalEnergyTax = this.get('totalEnergyTax');
+    const taxBracket3 = this.get('energyTaxBracket3');
+    const taxBracket2 = this.get('energyTaxBracket2');
+    const taxBracket1 = this.get('energyTaxBracket1');
+    const grossInvestment = this.get('grossInvestment');
+    const totalTaxDeduction = this.get('totalTaxDeduction');
+    const netInvestment = grossInvestment - totalTaxDeduction;
 
     if (totalInvestment <= 2300) {
       return 0;
+    let energyTaxSaving;
+    if (energyProduction > energyUsage) {
+      energyTaxSaving = totalEnergyTax;
     }
     else if (totalInvestment <= 55248) {
       return brutoInvestment * 0.28;
+    else {
+      // production is smaller than current usage
+      if (taxBracket3 > 0) {
+        if (energyProduction - 50000 > 0) {
+          // production is bigger than usage in the 3rd bracket
+          if (energyProduction > energyUsage - 10000) {
+            // production is bigger than usage in the 2nd bracket
+            energyTaxSaving = taxBracket3 + taxBracket2 + taxBracket1 - ((energyUsage - energyProduction) * 0.1196);
+          }
+          else {
+            // production is smaller than usage in the 2nd bracket
+            energyTaxSaving = taxBracket3 + taxBracket2 - ((energyUsage - energyProduction ) * 0.0469)
+          }
+        }
+        else {
+          // production is smaller than usage in the 3rd bracket
+          energyTaxSaving = taxBracket3 - ((energyUsage - energyProduction ) * 0.0125);
+        }
+      }
+      else if (taxBracket2 > 0) {
+        if (energyProduction > energyUsage - 10000) {
+          // production is bigger than usage in the 2nd bracket
+          energyTaxSaving = taxBracket2 + taxBracket1 - ((energyUsage - energyProduction) * 0.1196);
+        }
+        else {
+          // production is smaller than usage in the 2nd bracket
+          energyTaxSaving =  taxBracket2 - ((energyUsage - energyProduction ) * 0.0469)
+        }
+      }
+      else {
+        // production is smaller than usage in the 3rd bracket
+        energyTaxSaving = energyProduction * 0.1196;
+      }
     }
     else if (totalInvestment <= 102311) {
       // other investments eat up the return
       if (otherInvestments > 15470) {
         return 0
+
+    let productionSavings;
+    if (connection === 'Aansluiting groter dan 3x80A') {
+      if (sdeContribution > 0) {
+        productionSavings = energyProduction * sdeBaseAmount;
       }
       else {
         return 15470 - otherInvestments;
+        productionSavings = energyProduction * apxPrice;
       }
     }
     else if (totalInvestment <= 306931) {
       // other investments eat up the return
       if (otherInvestments > 15470 - 0.756 * totalInvestment) {
         return 0;
+    else {
+      if (energyProduction > energyUsage) {
+        productionSavings = energyUsage * energyPrice + (energyProduction - energyUsage) * apxPrice + totalEnergyTax;
       }
       else {
         return 15470 - 0.756 * totalInvestment;
+        productionSavings = energyProduction * energyPrice + energyTaxSaving;
       }
     }
     return 0;
@@ -371,6 +434,16 @@ export default Ember.Controller.extend({
         case 'meer dan € 200.000':
           taxRate = 0.25;
           break;
+    let personalSavings;
+    if (connection === 'Aansluiting kleiner dan of gelijk aan 3x80A') {
+      personalSavings = 0;
+    }
+    else {
+      if (energyProduction * (factorOwnUsage / 100) > energyUsage) {
+        personalSavings = energyUsage * (energyPrice - apxPrice) + totalEnergyTax;
+      }
+      else {
+        personalSavings = energyProduction * (factorOwnUsage / 100) * (energyPrice - apxPrice) + energyTaxSaving;
       }
     }
     return taxRate;
@@ -384,19 +457,32 @@ export default Ember.Controller.extend({
     const brutoInvestment = panelPrice * systemPower;
     const totalTax = this.get('EIA') + this.get('KIA') + brutoInvestment;
     const netInvestment = brutoInvestment - totalTax * this.get('taxRate');
+    const returnTime = netInvestment / (productionSavings + personalSavings);
+    const ROI = 1 / returnTime * 100;
 
     return [{
       label: 'Kosten per wp',
       value: '€ ' + panelPrice.toFixed(2)
+      label: 'Opbrengst energieproductie',
+      value: '€ ' + productionSavings.toFixed(2) + ' per jaar'
     }, {
       label: 'Bruto investering',
       value: '€ ' + brutoInvestment.toFixed(2)
+      label: 'Besparing eigen verbruik',
+      value: '€ ' + personalSavings.toFixed(2) + ' per jaar'
     }, {
       label: 'Netto fiscaal voordeel',
       value: '€ ' + totalTax.toFixed(2)
+      label: 'Totale jaarlijkse besparing',
+      value: '€ ' + (productionSavings + personalSavings).toFixed(2) + ' per jaar'
     }, {
       label: 'Netto investering',
       value: '€ ' + netInvestment.toFixed(2)
+      label: 'Terugverdientijd',
+      value: returnTime.toFixed(1) + ' jaar'
+    }, {
+      label: 'Rendement',
+      value: ROI.toFixed(1) + '%'
     }];
   }.property(),
 
