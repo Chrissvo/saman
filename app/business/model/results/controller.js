@@ -137,6 +137,27 @@ export default Ember.Controller.extend({
     }
     return 0;
   }.property(),
+
+  KIA: function() {
+    const otherInvestments = this.get('model.company.otherInvestments');
+    const systemPower = this.get('systemPower');
+    const grossInvestment = this.get('grossInvestment');
+    const totalInvestment = grossInvestment + otherInvestments;
+
+    if (totalInvestment <= 2300) {
+      return 0;
+    }
+    else if (totalInvestment <= 55248) {
+      return totalInvestment * 0.28;
+    }
+    else if (totalInvestment <= 102311) {
+      return 15470;
+    }
+    else if (totalInvestment <= 306931) {
+      return 15470 - 0.756 * totalInvestment;
+    }
+    return 0;
+  }.property(),
   situationData: function() {
     return [{
       label: 'Juridische bedrijfsvorm',
