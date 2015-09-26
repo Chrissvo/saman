@@ -471,7 +471,57 @@ export default Ember.Controller.extend({
   }.property(),
 
   kiaData: function() {
+    const otherInvestments = this.get('model.company.otherInvestments');
+    const grossInvestment = this.get('grossInvestment');
+    const totalInvestment = grossInvestment + otherInvestments;
+    const KIA = this.get('KIA');
+    const solarKIA = this.get('solarKIA');
 
+    let investmentCategory;
+    let taxRule;
+    if (totalInvestment <= 2300) {
+      investmentCategory = '€ 0 - € 2.300';
+      taxRule = 'niets aftrekbaar';
+    }
+    else if (totalInvestment <= 55248) {
+      investmentCategory = '€ 2.300 - € 55.248';
+      taxRule = '28% van bruto investering aftrekbaar';
+    }
+    else if (totalInvestment <= 102311) {
+      investmentCategory = '€ 55.248 - € 102.311';
+      taxRule = '€ 15.470 aftrekbaar';
+    }
+    else if (totalInvestment <= 306931) {
+      investmentCategory = '€ 102.311 - € 306.931';
+      taxRume = '€ 15.470 aftrekbaar - 7,56% investering > € 102.311'
+    }
+    else if (totalInvestment > 306931) {
+      investmentCategory = 'meer dan € 306.931'
+      taxRule = 'niets aftrekbaar';
+    }
+
+    return [{
+      label: 'Overige investeringen',
+      value: '€ ' + otherInvestments.toFixed(2)
+    }, {
+      label: 'Investing in zonnepanelen',
+      value: '€ ' + grossInvestment.toFixed(2)
+    }, {
+      label: 'Totale investeringen',
+      value: '€ ' + totalInvestment.toFixed(2)
+    },{
+      label: 'Investeringscategorie',
+      value: investmentCategory
+    }, {
+      label: 'Belastingregel',
+      value: taxRule
+    }, {
+      label: 'KIA aftrek 2015',
+      value: '€ ' + KIA.toFixed(2)
+    }, {
+      label: 'KIA aftrek zonnepanelen',
+      value: '€ ' + solarKIA.toFixed(2)
+    }];
   }.property(),
 
   depreciationData: function() {
