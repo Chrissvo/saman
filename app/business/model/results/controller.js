@@ -4,6 +4,12 @@ export default Ember.Controller.extend({
 
   queryParams: ['systemId'],
 
+  // properties
+  systemPower: function() {
+    const panelAmount = this.get('model.system.panelAmount');
+    const panelPower = this.get('model.system.panelPower');
+    return panelAmount * panelPower;
+  }.property(),
   situationData: function() {
     return [{
       label: 'Juridische bedrijfsvorm',
