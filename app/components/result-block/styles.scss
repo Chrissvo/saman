@@ -1,0 +1,8 @@
+.result-group {
+  .result-label,
+  .result-value {
+    @include columns(2, 2%);
+    max-width: 200px;
+    margin: 0;
+  }
+}

@@ -1,0 +1,21 @@
+.tile {
+  width: 150px;
+  height: 150px;
+  background-color: $white;
+  text-align: center;
+  border-radius: 2px;
+  text-transform: uppercase;
+  margin: 10px;
+  &:hover {
+    background-color: darken($white, 2%);
+    outline: 1px solid $green;
+  }
+  .icon {
+    padding: 30px 15px 15px 15px;
+    text-decoration: none;
+    color: $black;
+  }
+  .label {
+    color: $text;
+  }
+}

@@ -1,0 +1,8 @@
+.box {
+  padding: 0 5% 0 5%;
+  &.box-grey {
+    background-color: $lightgrey;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+}

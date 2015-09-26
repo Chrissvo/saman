@@ -1,0 +1,14 @@
+<form {{action "submit" on="submit"}}>
+
+	<div class="box">
+		<h1>{{header}}</h1>
+	</div>
+
+	<div class="box box-grey">
+    <div class="box-form">
+  	  {{yield}}
+  	  <button type="submit" {{action "submit"}} class="btn btn-primary">{{buttonLabel}}</button>
+    </div>
+	</div>
+
+</form>

@@ -1,0 +1,7 @@
+@mixin columns($amount, $margin:1%) {
+  @include clearfix;
+  display: inline-block;
+  margin-left: $margin;
+  margin-right: $margin;
+  width: 100% / $amount - $margin * 2;
+}

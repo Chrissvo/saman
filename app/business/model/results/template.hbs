@@ -1,0 +1,27 @@
+{{#bread-crumbs model=model}}{{/bread-crumbs}}
+
+<div class="box">
+  <h1>Resultaten</h1>
+  <h3>Klant: {{model.customer.name}}</h3>
+  <h3>Model ID: {{model.system.id}}</h3>
+</div>
+
+<div class="box box-grey">
+  <div class="box-result-left">
+    {{result-block header="Situatie" data=situationData}}
+    {{result-block header="Energiekosten" data=energyData}}
+    {{result-block header="PV-panelen" data=solarData}}
+    {{result-block header="Opbrengstspecificatie" data=revenueData}}
+    {{result-block header="Investering" data=investmentData}}
+    {{result-block header="Jaarlijkse besparing" data=savingsData}}
+  </div>
+  <div class="box-result-right">
+    {{result-block header="SDE+ subsidie" data=sdeData}}
+    {{result-block header="Fiscale aftrekposten"}}
+    {{result-block header="Energie Investerings Aftrek (EIA)" data=eiaData}}
+    {{result-block header="Kleinschalige Investerings Aftrek (KIA)" data=kiaData}}
+    {{result-block header="Variabele afschrijving milieuinvestering (10 jaar)" data=depreciationData}}
+    {{result-block header="Totaal aftrekposten" data=taxDeductionData}}
+  </div>
+</div>
+

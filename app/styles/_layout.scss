@@ -1,0 +1,30 @@
+body {
+  margin: 0;
+  .logo {
+    padding: 15px 5% 10px 5%;
+  }
+  h1 {
+    color: $h1;
+    font: 44px/42px 'Open Sans', sans-serif;
+    font-weight: 800;
+    text-transform: uppercase;
+    word-break: break-word;
+  }
+  h2 {
+    color: $h2;
+    font: 24px/27px 'Open Sans', sans-serif;
+    font-weight: 800;
+    text-transform: uppercase;
+    word-break: break-word;
+  }
+  h3 {
+    color: $h3;
+    text-transform: uppercase;
+    word-break: break-word;
+    font-weight: 200;
+  }
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+}

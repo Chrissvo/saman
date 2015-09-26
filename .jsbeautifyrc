@@ -1,0 +1,18 @@
+{
+  "html": {
+    "allowed_file_extensions": [],
+    "indent_size": 2,
+    "max_preserve_newlines": 2,
+    "indent_handlebars": true,
+    "indent_inner_html": true
+  },
+  "css": {
+    "indent_size": 2,
+    "max_preserve_newlines": 2
+  },
+  "js": {
+    "indent_size": 2,
+    "max_preserve_newlines": 2,
+    "brace_style": "end-expand"
+  }
+}
