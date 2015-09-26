@@ -226,6 +226,8 @@ export default Ember.Controller.extend({
     const restFiscalAdvantage = restTaxDeduction * taxRate;
     return initialFiscalAdvantage + restFiscalAdvantage;
   }.property(),
+
+  // data collections
   situationData: function() {
     return [{
       label: 'Juridische bedrijfsvorm',
