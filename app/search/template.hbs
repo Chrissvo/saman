@@ -1,3 +1,12 @@
 {{#bread-crumbs model=model}}{{/bread-crumbs}}
 
-{{outlet}}
+<div class="box">
+  <h1>Model ophalen</h1>
+</div>
+<div class="box box-grey box-search">
+  <form {{action "submit" on="submit"}}>
+    <h3>Vul het ID van uw model in</h3>
+    {{input type="text" value=systemId class="search-input"}}
+    <button type="submit" {{action "submit" systemId}} class="btn btn-primary">Model ophalen</button>
+  </form>
+</div>
