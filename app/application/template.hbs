@@ -8,15 +8,6 @@
   {{#each notifications as |notification|}}
     <div class={{notification.type}}>
       <p class="notification">
-        {{#if (eq notification.type 'error')}}
-          <span class="glyphicon glyphicon-exclamation-sign"></span>
-        {{else if (eq notification.type 'warning')}}
-          <span class="glyphicon glyphicon-warning-sign"></span>
-        {{else if (eq notification.type 'success')}}
-          <span class="glyphicon glyphicon-ok-sign"></span>
-        {{else}}
-          <span class="glyphicon glyphicon-info-sign"></span>
-        {{/if}}
         {{notification.message}}
         <span class="fa fa-times close-notification" {{action 'deleteNotification' notification.id}}></span>
       </p>
