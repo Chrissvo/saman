@@ -4,6 +4,14 @@ export default Ember.Controller.extend({
 
   queryParams: ['systemId'],
 
+  // function
+  toFixed: function(value, decimals) {
+    if (value) {
+      return value.toFixed(decimals);
+    }
+    return 0;
+  },
+
   // properties
   systemPower: function() {
     const panelAmount = this.get('model.system.panelAmount');
@@ -236,13 +244,13 @@ export default Ember.Controller.extend({
       value: this.get('model.company.incomeCategory')
     }, {
       label: 'Huidig verbruik',
-      value: this.get('model.company.energyUsage').toFixed(0) + ' kWh/jaar'
+      value: this.toFixed(this.get('model.company.energyUsage'), 0) + ' kWh/jaar'
     }, {
       label: 'Netto energieprijs',
-      value: '€ ' + this.get('model.company.energyPrice').toFixed(3) + ' per kWh'
+      value: '€ ' + this.toFixed(this.get('model.company.energyPrice'), 3) + ' per kWh'
     }, {
       label: 'Factor eigen verbruik',
-      value: this.get('model.company.factorOwnUsage').toFixed(0) + '%'
+      value: this.toFixed(this.get('model.company.factorOwnUsage'), 0) + '%'
     }, {
       label: 'Aansluiting',
       value: this.get('model.company.connection')
@@ -258,19 +266,19 @@ export default Ember.Controller.extend({
 
     return [{
       label: 'Netto energiekosten',
-      value: '€ ' + (energyCost).toFixed(2)
+      value: '€ ' + this.toFixed(energyCost, 2)
     }, {
       label: 'Totale energiebelasting',
-      value: '€ ' + totalEnergyTax.toFixed(2)
+      value: '€ ' + this.toFixed(totalEnergyTax, 2)
     }, {
       label: 'Totale energiekosten',
-      value: '€ ' + (totalEnergyTax + energyCost).toFixed(2)
+      value: '€ ' + this.toFixed((totalEnergyTax + energyCost), 2)
     }, {
       label: 'Energiebelasting',
-      value: '€ ' + energyTax.toFixed(3)
+      value: '€ ' + this.toFixed(energyTax, 3)
     }, {
       label: 'Bruto energieprijs',
-      value: '€ ' + ((totalEnergyTax + energyCost) / energyUsage).toFixed(3)
+      value: '€ ' + this.toFixed((totalEnergyTax + energyCost) / energyUsage, 3)
     }];
   }.property(),
 
@@ -298,16 +306,16 @@ export default Ember.Controller.extend({
 
     return [{
       label: 'Kosten per wp',
-      value: '€ ' + panelPrice.toFixed(2)
+      value: '€ ' + this.toFixed(panelPrice, 2)
     }, {
       label: 'Bruto investering',
-      value: '€ ' + grossInvestment.toFixed(2)
+      value: '€ ' + this.toFixed(grossInvestment, 2)
     }, {
       label: 'Netto fiscaal voordeel',
-      value: '€ ' + totalTaxDeduction.toFixed(2)
+      value: '€ ' + this.toFixed(totalTaxDeduction, 2)
     }, {
       label: 'Netto investering',
-      value: '€ ' + netInvestment.toFixed(2)
+      value: '€ ' + this.toFixed(netInvestment, 2)
     }];
   }.property(),
 
@@ -403,19 +411,19 @@ export default Ember.Controller.extend({
 
     return [{
       label: 'Opbrengst energieproductie',
-      value: '€ ' + productionSavings.toFixed(2) + ' per jaar'
+      value: '€ ' + this.toFixed(productionSavings, 2) + ' per jaar'
     }, {
       label: 'Besparing eigen verbruik',
-      value: '€ ' + personalSavings.toFixed(2) + ' per jaar'
+      value: '€ ' + this.toFixed(personalSavings, 2) + ' per jaar'
     }, {
       label: 'Totale jaarlijkse besparing',
-      value: '€ ' + (productionSavings + personalSavings).toFixed(2) + ' per jaar'
+      value: '€ ' + this.toFixed((productionSavings + personalSavings), 2) + ' per jaar'
     }, {
       label: 'Terugverdientijd',
-      value: returnTime.toFixed(1) + ' jaar'
+      value: this.toFixed(returnTime, 1) + ' jaar'
     }, {
       label: 'Rendement',
-      value: ROI.toFixed(1) + '%'
+      value: this.toFixed(ROI, 1) + '%'
     }];
   }.property(),
 
@@ -431,16 +439,16 @@ export default Ember.Controller.extend({
       value: sdePhase
     }, {
       label: 'Basisbedrag',
-      value: sdeBaseAmount.toFixed(3) + ' per kWh'
+      value: this.toFixed(sdeBaseAmount, 3) + ' per kWh'
     }, {
       label: 'APX energieprijs',
-      value: apxPrice.toFixed(3) + ' per kWh'
+      value: this.toFixed(apxPrice, 3) + ' per kWh'
     }, {
       label: 'SDE+ bijdrage',
-      value: sdeContribution.toFixed(3) + ' per kWh'
+      value: this.toFixed(sdeContribution, 3) + ' per kWh'
     }, {
       label: 'SDE+ bijdrage over 15 jaar',
-      value: sdeLifeContribution.toFixed(2)
+      value: this.toFixed(sdeLifeContribution, 2)
     }];
   }.property(),
 
@@ -461,10 +469,10 @@ export default Ember.Controller.extend({
       value: eiaPercentage * 100 + '%'
     }, {
       label: 'Bruto investering excl. BTW',
-      value: '€ '+ grossInvestment.toFixed(2)
+      value: '€ '+ this.toFixed(grossInvestment, 2)
     }, {
       label: 'EIA aftrek 2015',
-      value: '€ ' + EIA.toFixed(2)
+      value: '€ ' + this.toFixed(EIA, 2)
     }];
   }.property(),
 
@@ -500,13 +508,13 @@ export default Ember.Controller.extend({
 
     return [{
       label: 'Overige investeringen',
-      value: '€ ' + otherInvestments.toFixed(2)
+      value: '€ ' + this.toFixed(otherInvestments, 2)
     }, {
       label: 'Investing in zonnepanelen',
-      value: '€ ' + grossInvestment.toFixed(2)
+      value: '€ ' + this.toFixed(grossInvestment, 2)
     }, {
       label: 'Totale investeringen',
-      value: '€ ' + totalInvestment.toFixed(2)
+      value: '€ ' + this.toFixed(totalInvestment, 2)
     },{
       label: 'Investeringscategorie',
       value: investmentCategory
@@ -515,10 +523,10 @@ export default Ember.Controller.extend({
       value: taxRule
     }, {
       label: 'KIA aftrek 2015',
-      value: '€ ' + KIA.toFixed(2)
+      value: '€ ' + this.toFixed(KIA, 2)
     }, {
       label: 'KIA aftrek zonnepanelen',
-      value: '€ ' + solarKIA.toFixed(2)
+      value: '€ ' + this.toFixed(solarKIA, 2)
     }];
   }.property(),
 
@@ -532,10 +540,10 @@ export default Ember.Controller.extend({
 
     return [{
       label: 'Afschrijving 2015 (75%)',
-      value: '€ ' + initialDepreciation.toFixed(2)
+      value: '€ ' + this.toFixed(initialDepreciation, 2)
     }, {
       label: 'Afschrijving 2016-2024 (25%)',
-      value: '€ ' + restDepreciation.toFixed(2)
+      value: '€ ' + this.toFixed(restDepreciation, 2)
     }];
   }.property(),
 
@@ -553,22 +561,22 @@ export default Ember.Controller.extend({
 
     return [{
       label: 'Totaal aftrekposten 2015',
-      value: '€ ' + initialTaxDeduction.toFixed(2)
+      value: '€ ' + this.toFixed(initialTaxDeduction, 2)
     }, {
       label: 'Totaal aftrekposten 2016-2024',
-      value: '€ ' + restTaxDeduction.toFixed(2)
+      value: '€ ' + this.toFixed(restTaxDeduction, 2)
     }, {
       label: 'Belastingtarief',
       value: taxRate * 100 + '%'
     }, {
       label: 'Fiscaal voordeel 2015',
-      value: '€ ' + initialFiscalAdvantage.toFixed(2)
+      value: '€ ' + this.toFixed(initialFiscalAdvantage, 2)
     }, {
       label: 'Fiscaal voordeel 2016-2024',
-      value: '€ ' + restFiscalAdvantage.toFixed(2)
+      value: '€ ' + this.toFixed(restFiscalAdvantage, 2)
     }, {
       label: 'Netto fiscaal voordeel',
-      value: '€ ' + totalFiscalAdvantage.toFixed(2)
+      value: '€ ' + this.toFixed(totalFiscalAdvantage, 2)
     }];
   }.property(),
 
@@ -588,7 +596,7 @@ export default Ember.Controller.extend({
       value: roofOrientationFactor + '%'
     }, {
       label: 'Elektriciteitsproductie',
-      value: energyProduction.toFixed(0) + ' kWh/jaar'
+      value: this.toFixed(energyProduction, 0) + ' kWh/jaar'
     }];
   }.property(),
 
