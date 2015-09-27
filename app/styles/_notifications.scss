@@ -10,6 +10,9 @@ div.notifications {
     line-height: 30px;
     margin-bottom: 0;
     margin-top: 0;
+    white-space: no-wrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
     .fa {
       top: 2px;
       padding-right: 2px;
