@@ -86,6 +86,14 @@ export default Ember.Route.extend({
       company: company,
       system: system
     });
+  },
+
+  actions: {
+
+    returnToPrevious: function() {
+      return history.back();
+    }
+
   }
 
 });
