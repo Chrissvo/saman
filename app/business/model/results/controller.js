@@ -12,6 +12,15 @@ export default Ember.Controller.extend({
     return 0;
   },
 
+  emailLink: function() {
+    const systemId = this.get('systemId');
+    const email = this.get('model.customer.email');
+    return 'mailto:' + email +
+      '?subject=Resultaat%20SAMAN%20Rekenmodel%20Zakelijk' +
+      '&body=Dit%20is%20een%20directe%20link%20naar%20de%20resultaten%20van%20uw%20rekenmodel%3A%20' +
+      'https://saman.christian.surf/business/model/results?systemId=' + systemId;
+  }.property(),
+
   // properties
   systemPower: function() {
     const panelAmount = this.get('model.system.panelAmount');
