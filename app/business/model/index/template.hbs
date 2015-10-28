@@ -22,10 +22,10 @@
     {{else if (or (eq companyType 'Eenmanszaak') (eq companyType 'Maatschap') (eq companyType 'CV') (eq companyType 'VOF'))}}
       {{form-field type="select" fieldId="incomeCategory" selectData=personalIncomeCategories value=incomeCategory label="Inkomen / Winst"}}
     {{/if}}
-    {{form-field type="number" fieldId="otherInvestments" value=otherInvestments label="Overige investeringen"}}
+    {{form-field type="number" fieldId="otherInvestments" value=otherInvestments label="Overige investeringen" value=50000}}
     {{form-field type="number" fieldId="energyUsage" value=energyUsage label="Huidig Verbruik in kWh/jaar"  isRequired=true}}
-    {{form-field type="number" fieldId="energyPrice" value=energyPrice label="Netto energieprijs per kWh" isRequired=true}}
-    {{form-field type="number" fieldId="factorOwnUsage" value=factorOwnUsage label="Factor eigen verbruik in %" isRequired=true}}
+    {{form-field type="number" fieldId="energyPrice" value=energyPrice label="Netto energieprijs per kWh" isRequired=true value=0.06}}
+    {{form-field type="number" fieldId="factorOwnUsage" value=factorOwnUsage label="Factor eigen verbruik in %" isRequired=true value=30}}
     {{form-field type="select" fieldId="connection" selectData=connectionTypes value=connection label="Aansluiting"}}
 
   {{/object-form}}
@@ -36,13 +36,14 @@
   {{#object-form submit="saveSystem" header="Zonne-energiesysteem" buttonLabel="Start berekening"}}
 
     {{form-field type="number" fieldId="panelAmount" value=panelAmount label="Aantal panelen" isRequired=true}}
-    {{form-field type="number" fieldId="panelPower" value=panelPower label="Vermogen in Watt piek" isRequired=true}}
-    {{form-field type="number" fieldId="panelPrice" value=panelPrice label="Koster per Watt piek" isRequired=true}}
+    {{form-field type="number" fieldId="panelPower" value=panelPower label="Vermogen in Watt piek" isRequired=true value=265}}
+    {{form-field type="number" fieldId="panelPrice" value=panelPrice label="Koster per Watt piek" isRequired=true value=0.95}}
     {{form-field type="select" selectData=roofOrientations fieldId="roofOrientation" value=roofOrientation label="Orientatie"}}
     {{form-field type="select" selectData=roofSlopes fieldId="roofSlope" value=roofSlope label="Hellingshoek" }}
-    {{form-field type="select" selectData=sdePhases fieldId="sdePhase" value=sdePhase label="SDE Inschrijffase"}}
-    {{form-field type="number" fieldId="apxPrice" value=apxPrice label="APX energieprijs" isRequired=true}}
-
+    {{#if (eq connection 'Aansluiting groter dan 3x80A')}}
+      {{form-field type="select" selectData=sdePhases fieldId="sdePhase" value=sdePhase label="SDE Inschrijffase"}}
+      {{form-field type="number" fieldId="apxPrice" value=apxPrice label="APX energieprijs" isRequired=true value=0.045}}
+    {{/if}}
   {{/object-form}}
 
 {{/if}}
