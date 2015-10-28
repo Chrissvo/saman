@@ -3,7 +3,11 @@
 <div class="box">
   <h1>Resultaten</h1>
   {{#if model.system}}
-    <h3>Klant: {{model.customer.name}}</h3>
+    {{#if model.customer.name}}
+      <h3>Klant: <span class="no-text-transform">{{model.customer.name}}</span></h3>
+    {{else}}
+      <h3>Klant: <span class="no-text-transform">{{model.customer.email}}</span></h3>
+    {{/if}}
     <h3>Model ID: {{model.system.id}}</h3>
   {{/if}}
   <a href={{emailLink}}><button class="emailBtn btn btn-primary">Email</button></a>
