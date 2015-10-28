@@ -24,7 +24,9 @@
       {{result-block header="Jaarlijkse besparing" data=savingsData}}
     </div>
     <div class="box-result-right">
-      {{result-block header="SDE+ subsidie" data=sdeData}}
+      {{#if (eq connection 'Aansluiting groter dan 3x80A')}}
+        {{result-block header="SDE+ subsidie" data=sdeData}}
+      {{/if}}
       {{result-block header="Fiscale aftrekposten"}}
       {{result-block header="Energie Investerings Aftrek (EIA)" data=eiaData}}
       {{result-block header="Kleinschalige Investerings Aftrek (KIA)" data=kiaData}}
