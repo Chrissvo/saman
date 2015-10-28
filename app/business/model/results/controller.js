@@ -7,6 +7,9 @@ export default Ember.Controller.extend({
   // function
   toFixed: function(value, decimals) {
     if (value) {
+      if (typeof value === 'string') {
+        value = Number(value);
+      }
       return value.toFixed(decimals);
     }
     return 0;
