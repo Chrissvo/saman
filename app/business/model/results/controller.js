@@ -16,7 +16,7 @@ export default Ember.Controller.extend({
   },
 
   emailLink: function() {
-    const systemId = this.get('systemId');
+    const systemId = this.get('model.system.id');
     const email = this.get('model.customer.email');
     return 'mailto:' + email +
       '?subject=Resultaat%20SAMAN%20Rekenmodel%20Zakelijk' +
