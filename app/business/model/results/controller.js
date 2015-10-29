@@ -440,34 +440,62 @@ export default Ember.Controller.extend({
     const returnTime = netInvestment / (productionSavings + personalSavings);
     const ROI = 1 / returnTime * 100;
 
-    return [{
-      label: 'Opbrengst energieproductie',
-      value: productionSavings,
-      type: 'currency',
-      suffix: 'per jaar'
-    }, {
-      label: 'Besparing eigen verbruik',
-      value: personalSavings,
-      type: 'currency',
-      suffix: 'per jaar'
-    }, {
-      label: 'Totale jaarlijkse besparing',
-      value: productionSavings + personalSavings,
-      type: 'currency',
-      suffix: 'per jaar'
-    }, {
-      label: 'Terugverdientijd',
-      value: returnTime,
-      type: 'number',
-      precision: 1,
-      suffix: 'jaar'
-    }, {
-      label: 'Rendement',
-      value: ROI,
-      type: 'number',
-      precision: 1,
-      suffix: '%'
-    }];
+    if (connection === 'Aansluiting groter dan 3x80A') {
+      return [{
+        label: 'Opbrengst energieproductie',
+        value: productionSavings,
+        type: 'currency',
+        suffix: 'per jaar'
+      }, {
+        label: 'Besparing eigen verbruik',
+        value: personalSavings,
+        type: 'currency',
+        suffix: 'per jaar'
+      }, {
+        label: 'Totale jaarlijkse besparing',
+        value: productionSavings + personalSavings,
+        type: 'currency',
+        suffix: 'per jaar'
+      }, {
+        label: 'Terugverdientijd',
+        value: returnTime,
+        type: 'number',
+        precision: 1,
+        suffix: 'jaar'
+      }, {
+        label: 'Rendement',
+        value: ROI,
+        type: 'number',
+        precision: 1,
+        suffix: '%'
+      }];
+    }
+    // connection === Aansluiting kleiner dan of gelijk aan 3x80A
+    else {
+      return [{
+        label: 'Opbrengst energieproductie',
+        value: productionSavings,
+        type: 'currency',
+        suffix: 'per jaar'
+      }, {
+        label: 'Totale jaarlijkse besparing',
+        value: productionSavings + personalSavings,
+        type: 'currency',
+        suffix: 'per jaar'
+      }, {
+        label: 'Terugverdientijd',
+        value: returnTime,
+        type: 'number',
+        precision: 1,
+        suffix: 'jaar'
+      }, {
+        label: 'Rendement',
+        value: ROI,
+        type: 'number',
+        precision: 1,
+        suffix: '%'
+      }];
+    }
   }.property(),
 
   sdeData: function() {
