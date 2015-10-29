@@ -2,6 +2,18 @@
 {{#each data as |object|}}
   <div class="result-group">
     <p class="result-label">{{object.label}}</p>
-    <p class="result-value">{{object.value}}</p>
+
+    <p class="result-value">
+      {{#if (eq object.type 'currency')}}
+        {{format-money object.value precision=object.precision}}
+      {{else if (eq object.type 'number')}}
+        {{format-number object.value precision=object.precision}}
+      {{else}}
+        {{object.value}}
+      {{/if}}
+      {{#if object.suffix}}
+        <span>{{object.suffix}}</span>
+      {{/if}}
+    </p>
   </div>
 {{/each}}
