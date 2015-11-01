@@ -8,7 +8,7 @@
     {{else}}
       <h3>Klant: <span class="no-text-transform">{{model.customer.email}}</span></h3>
     {{/if}}
-    <h3>Model ID: {{model.system.id}}</h3>
+    <h3>Model ID: <span class="no-text-transform">{{model.system.id}}</span></h3>
     <a href={{emailLink}}><button class="emailBtn btn btn-primary">Email</button></a>
   {{/if}}
 </div>
