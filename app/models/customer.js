@@ -8,6 +8,7 @@ export default DS.Model.extend({
   city: DS.attr('string'),
   email: DS.attr('string'),
   phone: DS.attr('string'),
+  advisor: DS.attr('string'),
 
   companies: DS.hasMany('company'),
   systems: DS.hasMany('system')
