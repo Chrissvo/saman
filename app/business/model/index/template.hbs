@@ -1,7 +1,7 @@
 {{#bread-crumbs model=model}}{{/bread-crumbs}}
 
 {{#if customerForm}}
-  {{#object-form submit="saveCustomer" header="Klantgegevens" buttonLabel="Volgende"}}
+  {{#object-form submit="saveCustomer" header="Klantgegevens" buttonLabel="Opslaan"}}
 
   	{{form-field type="text" fieldId="name" value=model.customer.name label="Naam"}}
   	{{form-field type="text" fieldId="address" value=model.customer.address label="Adres"}}
