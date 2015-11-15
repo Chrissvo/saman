@@ -167,6 +167,10 @@ export default Ember.Controller.extend({
               data.incomeCategory = '€ 0 - € 18.628';
           }
         }
+        // prevent wrong factorOwnUsage
+        if (data.connection === 'Aansluiting kleiner dan of gelijk aan 3x80A') {
+          data.factorOwnUsage = 100;
+        }
         // save the company with new data
         return company.save(data).then(function(){
           this.set('companyForm', false);
