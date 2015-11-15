@@ -196,6 +196,7 @@ export default Ember.Controller.extend({
     saveSystem: function(data) {
       const customerId = this.get('customerId');
       const companyId = this.get('companyId');
+      const systemId = this.get('systemId');
       if (customerId) {
         data.customer = this.store.peekRecord('customer', customerId);
       }
@@ -208,6 +209,19 @@ export default Ember.Controller.extend({
         });
       }
       data.company = this.store.peekRecord('company', companyId);
+
+      if(systemId) {
+        const system = this.store.peekRecord('system', systemId);
+        return system.save(data).then(function(system) {
+          return this.transitionToRoute('business.model.results', {
+            queryParams: {
+              customer: data.customer,
+              company: data.company,
+              system: system
+            }
+          });
+        }.bind(this));
+      }
       const newSystem = this.store.createRecord('system', data);
       newSystem.save().then(function(system) {
         // success
