@@ -107,8 +107,8 @@ export default Ember.Controller.extend({
                 // success > save system
                 this.set('customerForm', false);
                 return this.transitionToRoute('business.model.results');
-              });
-            });
+              }.bind(this));
+            }.bind(this));
           }.bind(this)).catch(function(error) {
             // fail
             return this.get('applicationController').notify({
@@ -122,19 +122,22 @@ export default Ember.Controller.extend({
           // customer exists
           const customer = customers.get('firstObject');
           this.set('customerId', customer.get('id'));
-          // save company
-          let company = this.store.peekRecord('company', this.get('companyId'));
-          company.set('customer', customer);
-          company.save().then(function() {
-            // success > save model
-            let system = this.store.peekRecord('system', this.get('systemId'));
-            system.set('customer', customer);
-            system.save().then(function() {
-              // success > save system
-              this.set('customerForm', false);
-              return this.transitionToRoute('business.model.results');
-            });
-          });
+          // save customer
+          customer.save(data).then(function(customer){
+            // save company
+            let company = this.store.peekRecord('company', this.get('companyId'));
+            company.set('customer', customer);
+            company.save().then(function() {
+              // success > save model
+              let system = this.store.peekRecord('system', this.get('systemId'));
+              system.set('customer', customer);
+              system.save().then(function() {
+                // success > save system
+                this.set('customerForm', false);
+                return this.transitionToRoute('business.model.results');
+              }.bind(this));
+            }.bind(this));
+          }.bind(this));
         }
       }.bind(this), function() {
         // fail
