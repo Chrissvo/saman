@@ -106,7 +106,13 @@ export default Ember.Controller.extend({
               system.save().then(function() {
                 // success > save system
                 this.set('customerForm', false);
-                return this.transitionToRoute('business.model.results');
+                return this.transitionToRoute('business.model.results', {
+                  queryParams: {
+                    customer: this.store.peekRecord('customer', this.get('customerId')),
+                    company: this.store.peekRecord('company', this.get('companyId')),
+                    system: system
+                  }
+                });
               }.bind(this));
             }.bind(this));
           }.bind(this)).catch(function(error) {
@@ -134,7 +140,13 @@ export default Ember.Controller.extend({
               system.save().then(function() {
                 // success > save system
                 this.set('customerForm', false);
-                return this.transitionToRoute('business.model.results');
+                return this.transitionToRoute('business.model.results', {
+                  queryParams: {
+                    customer: this.store.peekRecord('customer', this.get('customerId')),
+                    company: this.store.peekRecord('customer', this.get('companyId')),
+                    system: system
+                  }
+                });
               }.bind(this));
             }.bind(this));
           }.bind(this));
