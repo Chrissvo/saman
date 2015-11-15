@@ -85,6 +85,18 @@ export default Ember.Route.extend({
     });
   },
 
+  afterModel: function(model) {
+    if (model.company) {
+      model.company.reload();
+    }
+    if (model.system) {
+      model.system.reload();
+    }
+    if (model.customer) {
+      model.customer.reload();
+    }
+  },
+
   actions: {
 
     returnToPrevious: function() {
