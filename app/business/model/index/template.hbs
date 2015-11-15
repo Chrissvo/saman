@@ -1,14 +1,14 @@
 {{#bread-crumbs model=model}}{{/bread-crumbs}}
 
 {{#if customerForm}}
-  {{#object-form submit="saveCustomer" header="Klantgegevens" buttonLabel="Volgende"}}
+  {{#object-form submit="saveCustomer" header="Klantgegevens" buttonLabel="Opslaan"}}
 
-  	{{form-field type="text" fieldId="name" value=name label="Naam"}}
-  	{{form-field type="text" fieldId="address" value=address label="Adres"}}
-  	{{form-field type="text" fieldId="zip" value=zip label="Postcode"}}
-  	{{form-field type="text" fieldId="city" value=city label="Woonplaats"}}
-  	{{form-field type="email" fieldId="email" value=email isRequired=true label="E-mail"}}
-  	{{form-field type="text" fieldId="phone" value=phone label="Telefoon"}}
+  	{{form-field type="text" fieldId="name" value=model.customer.name label="Naam"}}
+  	{{form-field type="text" fieldId="address" value=model.customer.address label="Adres"}}
+  	{{form-field type="text" fieldId="zip" value=model.customer.zip label="Postcode"}}
+  	{{form-field type="text" fieldId="city" value=model.customer.city label="Woonplaats"}}
+  	{{form-field type="email" fieldId="email" value=model.customer.email isRequired=true label="E-mail"}}
+  	{{form-field type="text" fieldId="phone" value=model.customer.phone label="Telefoon"}}
 
   {{/object-form}}
 {{/if}}
@@ -16,17 +16,17 @@
 {{#if companyForm}}
   {{#object-form submit="saveCompany" header="Bedrijfsgegevens" buttonLabel="Volgende"}}
 
-    {{form-field type="select" fieldId="companyType" selectData=companyTypes value=companyType label="Juridische bedrijfsform"}}
-    {{#if (or (eq companyType 'BV') (eq companyType 'NV'))}}
-      {{form-field type="select" fieldId="incomeCategory" selectData=corporateIncomeCategories value=incomeCategory label="Inkomen / Winst"}}
-    {{else if (or (eq companyType 'Eenmanszaak') (eq companyType 'Maatschap') (eq companyType 'CV') (eq companyType 'VOF'))}}
-      {{form-field type="select" fieldId="incomeCategory" selectData=personalIncomeCategories value=incomeCategory label="Inkomen / Winst"}}
+    {{form-field type="select" fieldId="companyType" selectData=companyTypes value=model.company.companyType label="Juridische bedrijfsform"}}
+    {{#if (or (eq model.company.companyType 'BV') (eq model.company.companyType 'NV'))}}
+      {{form-field type="select" fieldId="incomeCategory" selectData=corporateIncomeCategories value=model.company.incomeCategory label="Inkomen / Winst"}}
+    {{else if (or (eq model.company.companyType 'Eenmanszaak') (eq model.company.companyType 'Maatschap') (eq model.company.companyType 'CV') (eq model.company.companyType 'VOF'))}}
+      {{form-field type="select" fieldId="incomeCategory" selectData=personalIncomeCategories value=model.company.incomeCategory label="Inkomen / Winst"}}
     {{/if}}
-    {{form-field type="number" fieldId="otherInvestments" value=otherInvestments label="Overige investeringen" value=50000}}
-    {{form-field type="number" fieldId="energyUsage" value=energyUsage label="Huidig Verbruik in kWh/jaar"  isRequired=true}}
-    {{form-field type="number" fieldId="energyPrice" value=energyPrice label="Netto energieprijs per kWh" isRequired=true value=0.06}}
-    {{form-field type="number" fieldId="factorOwnUsage" value=factorOwnUsage label="Factor eigen verbruik in %" isRequired=true value=30}}
-    {{form-field type="select" fieldId="connection" selectData=connectionTypes value=connection label="Aansluiting"}}
+    {{form-field type="number" fieldId="otherInvestments" value=(if model.company.otherInvestments model.company.otherInvestments 50000) label="Overige investeringen"}}
+    {{form-field type="number" fieldId="energyUsage" value=model.company.energyUsage label="Huidig Verbruik in kWh/jaar"  isRequired=true}}
+    {{form-field type="number" fieldId="energyPrice" value=(if model.company.energyPrice model.company.energyPrice 0.06) label="Netto energieprijs per kWh" isRequired=true}}
+    {{form-field type="number" fieldId="factorOwnUsage" value=(if model.company.factorOwnUsage model.company.factorOwnUsage 30) label="Factor eigen verbruik in %" isRequired=true}}
+    {{form-field type="select" fieldId="connection" selectData=connectionTypes value=model.company.connection label="Aansluiting"}}
 
   {{/object-form}}
 {{/if}}
@@ -35,14 +35,14 @@
 
   {{#object-form submit="saveSystem" header="Zonne-energiesysteem" buttonLabel="Start berekening"}}
 
-    {{form-field type="number" fieldId="panelAmount" value=panelAmount label="Aantal panelen" isRequired=true}}
-    {{form-field type="number" fieldId="panelPower" value=panelPower label="Vermogen in Watt piek" isRequired=true value=265}}
-    {{form-field type="number" fieldId="panelPrice" value=panelPrice label="Koster per Watt piek" isRequired=true value=0.95}}
-    {{form-field type="select" selectData=roofOrientations fieldId="roofOrientation" value=roofOrientation label="Orientatie"}}
-    {{form-field type="select" selectData=roofSlopes fieldId="roofSlope" value=roofSlope label="Hellingshoek" }}
-    {{#if (eq connection 'Aansluiting groter dan 3x80A')}}
-      {{form-field type="select" selectData=sdePhases fieldId="sdePhase" value=sdePhase label="SDE Inschrijffase"}}
-      {{form-field type="number" fieldId="apxPrice" value=apxPrice label="APX energieprijs" isRequired=true value=0.045}}
+    {{form-field type="number" fieldId="panelAmount" value=model.system.panelAmount label="Aantal panelen" isRequired=true}}
+    {{form-field type="number" fieldId="panelPower" value=(if model.system.panelPower model.system.panelPower 265) label="Vermogen in Watt piek" isRequired=true}}
+    {{form-field type="number" fieldId="panelPrice" value=(if model.system.panelPrice model.system.panelPrice 0.95) label="Kosten per Watt piek" isRequired=true}}
+    {{form-field type="select" selectData=roofOrientations fieldId="roofOrientation" value=model.system.roofOrientation label="Orientatie"}}
+    {{form-field type="select" selectData=roofSlopes fieldId="roofSlope" value=model.system.roofSlope label="Hellingshoek" }}
+    {{#if (eq model.company.connection 'Aansluiting groter dan 3x80A')}}
+      {{form-field type="select" selectData=sdePhases fieldId="sdePhase" value=model.system.sdePhase label="SDE Inschrijffase"}}
+      {{form-field type="number" fieldId="apxPrice" value=(if model.system.apxPrice model.system.apxPrice 0.045) label="APX energieprijs" isRequired=true}}
     {{/if}}
   {{/object-form}}
 

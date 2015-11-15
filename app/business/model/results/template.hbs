@@ -5,11 +5,26 @@
   {{#if model.system}}
     {{#if model.customer.name}}
       <h3>Klant: <span class="no-text-transform">{{model.customer.name}}</span></h3>
-    {{else}}
+    {{else if model.customer.email}}
       <h3>Klant: <span class="no-text-transform">{{model.customer.email}}</span></h3>
     {{/if}}
-    <h3>Model ID: {{model.system.id}}</h3>
-    <a href={{emailLink}}><button class="emailBtn btn btn-primary">Email</button></a>
+    <h3>Model ID: <span class="no-text-transform">{{model.system.id}}</span></h3>
+
+    {{#if model.customer.email}}
+      <a href={{emailLink}}><button class="emailBtn btn btn-primary">E-mail</button></a>
+    {{else}}
+      <button class="emailBtn btn btn-primary" {{action 'goToCustomer' model.system.id model.company.id}}>E-mail</button>
+    {{/if}}
+
+    <button class="emailBtn btn btn-primary" {{action 'goToCustomer' model.system.id model.company.id}}>
+      {{#if model.customer}}
+        Wijzig klantgegevens
+      {{else}}
+        Voeg klantgegevens toe
+      {{/if}}
+    </button>
+
+    <button class="emailBtn btn btn-primary" {{action 'goToCompany' model.system.id model.company.id}}>Model wijzigen</button>
   {{/if}}
 </div>
 
@@ -30,7 +45,7 @@
       {{result-block header="Fiscale aftrekposten"}}
       {{result-block header="Energie Investerings Aftrek (EIA)" data=eiaData}}
       {{result-block header="Kleinschalige Investerings Aftrek (KIA)" data=kiaData}}
-      {{result-block header="Variabele afschrijving milieuinvestering (10 jaar)" data=depreciationData}}
+      {{result-block header="Reguliere afschrijving milieuinvestering (10 jaar)" data=depreciationData}}
       {{result-block header="Totaal aftrekposten" data=taxDeductionData}}
     </div>
   {{else}}

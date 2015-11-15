@@ -2,7 +2,6 @@
 {{#each data as |object|}}
   <div class="result-group">
     <p class="result-label">{{object.label}}</p>
-
     <p class="result-value">
       {{#if (eq object.type 'currency')}}
         {{format-money object.value precision=object.precision}}

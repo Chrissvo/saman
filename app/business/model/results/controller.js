@@ -620,7 +620,7 @@ export default Ember.Controller.extend({
     }];
   }.property(),
 
-  initialDepreciationPercentage: 0.75,
+  initialDepreciationPercentage: 0.1,
 
   depreciationData: function() {
     const totalDepreciation = this.get('grossInvestment');
@@ -629,11 +629,11 @@ export default Ember.Controller.extend({
     const restDepreciation = totalDepreciation - initialDepreciation;
 
     return [{
-      label: 'Afschrijving 2015 (75%)',
+      label: 'Afschrijving 2015 (10%)',
       value: initialDepreciation,
       type: 'currency'
     }, {
-      label: 'Afschrijving 2016-2024 (25%)',
+      label: 'Afschrijving 2016-2024 (90%)',
       value: restDepreciation,
       type: 'currency'
     }];

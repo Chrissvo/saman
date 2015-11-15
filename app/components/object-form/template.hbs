@@ -6,8 +6,8 @@
 
 	<div class="box box-grey">
     <div class="box-form">
-  	  {{yield}}
-  	  <button type="submit" {{action "submit"}} class="btn btn-primary">{{buttonLabel}}</button>
+      {{yield}}
+      {{spin-button type='submit' action='submit' isLoading=isLoading class='btn btn-primary' text=buttonLabel}}
     </div>
 	</div>
 

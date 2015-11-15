@@ -2,13 +2,13 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
 
-  customerForm: true,
-  companyForm: false,
+  customerForm: false,
+  companyForm: true,
   systemForm: false,
   customerId: undefined,
   companyId: undefined,
+  systemId: undefined,
 
-  companyType: 'Eenmanszaak',
   companyTypes: [
     'Eenmanszaak',
     'Maatschap',
@@ -20,7 +20,6 @@ export default Ember.Controller.extend({
     'Vereniging'
   ],
 
-  incomeCategory: '€ 0 - € 18.628',
   personalIncomeCategories: [
     '€ 0 - € 18.628',
     '€ 18.628 - € 33.426',
@@ -32,13 +31,11 @@ export default Ember.Controller.extend({
     'meer dan € 200.000'
   ],
 
-  connection: 'Aansluiting groter dan 3x80A',
   connectionTypes: [
     'Aansluiting groter dan 3x80A',
     'Aansluiting kleiner dan of gelijk aan 3x80A'
   ],
 
-  roofOrientation: 'W',
   roofOrientations: [
     'W',
     'WWZ',
@@ -51,7 +48,6 @@ export default Ember.Controller.extend({
     'O'
   ],
 
-  roofSlope: '0',
   roofSlopes: [
     '0',
     '5',
@@ -74,7 +70,6 @@ export default Ember.Controller.extend({
     '90'
   ],
 
-  sdePhase: 'Fase 1 (vanaf 31 maart)',
   sdePhases: [
     'Fase 1 (vanaf 31 maart)',
     'Fase 2 (vanaf 20 april)',
@@ -92,33 +87,96 @@ export default Ember.Controller.extend({
   actions: {
 
     saveCustomer: function(data) {
-      const newCustomer = this.store.createRecord('customer', data);
-      newCustomer.save().then(function(customer) {
-        // success
-        this.set('customerId', customer.get('id'));
-        this.set('customerForm', false);
-        return this.set('companyForm', true);
-      }.bind(this)).catch(function(error) {
+      return this.store.findAll('customer').then(function(customers) {
+        // filter out because emberfire does not support query function
+        customers = customers.filterBy('email', data.email);
+        // success > query customer
+        if (customers.get('length') < 1) {
+          const newCustomer = this.store.createRecord('customer', data);
+          newCustomer.save().then(function(customer) {
+            // success
+            this.set('customerId', customer.get('id'));
+            // save company
+            let company = this.store.peekRecord('company', this.get('companyId'));
+            company.set('customer', customer);
+            company.save().then(function() {
+              // success > save model
+              let system = this.store.peekRecord('system', this.get('systemId'));
+              system.set('customer', customer);
+              system.save().then(function() {
+                // success > save system
+                this.set('customerForm', false);
+                return this.transitionToRoute('business.model.results');
+              }.bind(this));
+            }.bind(this));
+          }.bind(this)).catch(function(error) {
+            // fail
+            return this.get('applicationController').notify({
+              id: 'fail.saveCustomer',
+              message: 'Opslaan van deze klant is mislukt! ' + error,
+              type: 'error'
+            });
+          }.bind(this));
+        }
+        else {
+          // customer exists
+          const customer = customers.get('firstObject');
+          this.set('customerId', customer.get('id'));
+          // save customer
+          customer.save(data).then(function(customer){
+            // save company
+            let company = this.store.peekRecord('company', this.get('companyId'));
+            company.set('customer', customer);
+            company.save().then(function() {
+              // success > save model
+              let system = this.store.peekRecord('system', this.get('systemId'));
+              system.set('customer', customer);
+              system.save().then(function() {
+                // success > save system
+                this.set('customerForm', false);
+                return this.transitionToRoute('business.model.results');
+              }.bind(this));
+            }.bind(this));
+          }.bind(this));
+        }
+      }.bind(this), function() {
         // fail
         return this.get('applicationController').notify({
           id: 'fail.saveCustomer',
           message: 'Opslaan van deze klant is mislukt! ' + error,
           type: 'error'
         });
-      }.bind(this));
+      });
+
     },
 
     saveCompany: function(data) {
-      const customerId = this.get('customerId');
-      if (customerId === undefined) {
-        // fail
-        return this.get('applicationController').notify({
-          id: 'fail.noCustomer',
-          message: 'Opslaan is mislukt, er zijn geen klantgegevens!',
-          type: 'error'
-        });
+      const companyId = this.get('companyId');
+      if (companyId) {
+        let company = this.store.peekRecord('company', companyId);
+        // check for wrong combinations of companyType and incomeCategory
+        if (data.companyType === 'BV' || data.companyType === 'NV') {
+          if (data.incomeCategory !== 'minder dan € 200.000' ||
+            data.incomeCategory !== 'meer dan € 200.000') {
+              data.incomeCategory = 'minder dan € 200.000';
+          }
+        }
+        else {
+          if (data.incomeCategory === 'minder dan € 200.000' ||
+            data.incomeCategory === 'meer dan € 200.000') {
+              data.incomeCategory = '€ 0 - € 18.628';
+          }
+        }
+        // save the company with new data
+        return company.save(data).then(function(){
+          this.set('companyForm', false);
+          return this.set('systemForm', true);
+        }.bind(this));
       }
-      data.customer = this.store.peekRecord('customer', customerId);
+      const customerId = this.get('customerId');
+      if (customerId) {
+        data.customer = this.store.peekRecord('customer', customerId);
+      }
       if (data.otherInvestments === undefined) {
         data.otherInvestments = "0";
       }
@@ -141,13 +199,9 @@ export default Ember.Controller.extend({
     saveSystem: function(data) {
       const customerId = this.get('customerId');
       const companyId = this.get('companyId');
-      if (customerId === undefined) {
-        // fail
-        return this.get('applicationController').notify({
-          id: 'fail.noCustomer',
-          message: 'Opslaan is mislukt, er zijn geen klantgegevens!',
-          type: 'error'
-        });
+      const systemId = this.get('systemId');
+      if (customerId) {
+        data.customer = this.store.peekRecord('customer', customerId);
       }
       if (companyId === undefined) {
         // fail
@@ -157,11 +211,24 @@ export default Ember.Controller.extend({
           type: 'error'
         });
       }
-      data.customer = this.store.peekRecord('customer', customerId);
       data.company = this.store.peekRecord('company', companyId);
+
+      if(systemId) {
+        const system = this.store.peekRecord('system', systemId);
+        return system.save(data).then(function(system) {
+          return this.transitionToRoute('business.model.results', {
+            queryParams: {
+              customer: data.customer,
+              company: data.company,
+              system: system
+            }
+          });
+        }.bind(this));
+      }
       const newSystem = this.store.createRecord('system', data);
       newSystem.save().then(function(system) {
         // success
+        this.set('systemId', system.get('id'));
         this.set('systemForm', false);
         return this.transitionToRoute('business.model.results', {
           queryParams: {

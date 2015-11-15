@@ -1,0 +1,6 @@
+<button {{action 'showLoading'}} class="button spinner {{if showLoader 'hide-text'}}">
+  {{#if showLoader}}
+    {{spin-js color='white'}}
+  {{/if}}
+  <span>{{buttonText}}</span>
+</button>

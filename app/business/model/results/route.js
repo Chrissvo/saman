@@ -52,27 +52,24 @@ export default Ember.Route.extend({
           if (system === undefined) {
             return resolve();
           }
-          if (system.get('customer') === undefined) {
-            //fail
-            return applicationController.notify({
-              id: 'results.no_customer_id',
-              message: 'Klant ID is niet gevonden.',
-              type: 'error'
-            });
+          if (system.get('customer.id') === undefined) {
+            return resolve(undefined);
           }
-          return resolve(this.store.findRecord('customer', system.get('customer.id')).catch(function(error) {
+          return this.store.findRecord('customer', system.get('customer.id')).then(function(customer) {
+            return resolve(customer);
+          }).catch(function(error) {
             //fail
             return applicationController.notify({
               id: 'results.no_customer',
               message: 'Klantgegevens zijn niet gevonden. ' + error,
               type: 'error'
             });
-          }.bind(this)));
+          }.bind(this));
         }.bind(this));
       }.bind(this));
     }
     else {
-      if (!company || !customer || !system) {
+      if (!company || !system) {
         return applicationController.notify({
           id: 'results.no_data',
           message: 'Berekening mislukt, onvoldoende data...',
@@ -92,6 +89,22 @@ export default Ember.Route.extend({
 
     returnToPrevious: function() {
       return history.back();
+    },
+
+    goToCustomer: function(systemId, companyId) {
+      this.controllerFor('business.model.index').set('systemId', systemId);
+      this.controllerFor('business.model.index').set('companyId', companyId);
+      this.controllerFor('business.model.index').set('customerForm', true);
+      this.controllerFor('business.model.index').set('companyForm', false);
+      return this.transitionTo('business.model.index');
+    },
+
+    goToCompany: function(systemId, companyId) {
+      this.controllerFor('business.model.index').set('systemId', systemId);
+      this.controllerFor('business.model.index').set('companyId', companyId);
+      this.controllerFor('business.model.index').set('customerForm', false);
+      this.controllerFor('business.model.index').set('companyForm', true);
+      return this.transitionTo('business.model.index');
     }
 
   }
