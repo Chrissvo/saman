@@ -126,7 +126,8 @@ export default Ember.Controller.extend({
         }
         else {
           // customer exists
-          this.set('customerId', customers.get('firstObject.id'));
+          const customer = customers.get('firstObject');
+          this.set('customerId', customer.get('id'));
           // save company
           let company = this.store.peekRecord('company', this.get('companyId'));
           company.set('customer', customer);
@@ -149,14 +150,14 @@ export default Ember.Controller.extend({
           type: 'error'
         });
       });
-      
+
     },
 
     saveCompany: function(data) {
       const customerId = this.get('customerId');
       if (customerId) {
         data.customer = this.store.peekRecord('customer', customerId);
-      } 
+      }
       if (data.otherInvestments === undefined) {
         data.otherInvestments = "0";
       }
