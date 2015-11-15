@@ -8,7 +8,8 @@ module.exports = function(environment) {
       'connect-src': "'self' https://auth.firebase.com wss://*.firebaseio.com",
       'img-src': "'self' https://saman.christian.surf/assets/images/",
       'font-src': "'self https://fonts.gstatic.com http://netdna.bootstrapcdn.com/font-awesome/",
-      'style-src': "'self' 'unsafe-inline' https://fonts.googleapis.com/"
+      'style-src': "'self' 'unsafe-inline' https://fonts.googleapis.com/",
+      'script-src': "'self' https://*.firebaseio.com"
     },
     firebase: 'https://solarcalculation.firebaseio.com/',
     baseURL: '/',
