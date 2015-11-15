@@ -2,11 +2,12 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
 
-  customerForm: true,
-  companyForm: false,
+  customerForm: false,
+  companyForm: true,
   systemForm: false,
   customerId: undefined,
   companyId: undefined,
+  systemId: undefined,
 
   companyType: 'Eenmanszaak',
   companyTypes: [
@@ -92,33 +93,70 @@ export default Ember.Controller.extend({
   actions: {
 
     saveCustomer: function(data) {
-      const newCustomer = this.store.createRecord('customer', data);
-      newCustomer.save().then(function(customer) {
-        // success
-        this.set('customerId', customer.get('id'));
-        this.set('customerForm', false);
-        return this.set('companyForm', true);
-      }.bind(this)).catch(function(error) {
+      return this.store.query('customer', {
+        email: data.email
+      }).then(function(customers) {
+        // success > query customer
+        if (customers.get('length') < 1) {
+          const newCustomer = this.store.createRecord('customer', data);
+          newCustomer.save().then(function(customer) {
+            // success
+            this.set('customerId', customer.get('id'));
+            // save company
+            let company = this.store.peekRecord('company', this.get('companyId'));
+            company.set('customer', customer);
+            company.save().then(function() {
+              // success > save model
+              let system = this.store.peekRecord('system', this.get('systemId'));
+              system.set('customer', customer);
+              system.save().then(function() {
+                // success > save system
+                this.set('customerForm', false);
+                return this.transitionToRoute('business.model.results');
+              });
+            });
+          }.bind(this)).catch(function(error) {
+            // fail
+            return this.get('applicationController').notify({
+              id: 'fail.saveCustomer',
+              message: 'Opslaan van deze klant is mislukt! ' + error,
+              type: 'error'
+            });
+          }.bind(this));
+        }
+        else {
+          // customer exists
+          this.set('customerId', customers.get('firstObject.id'));
+          // save company
+          let company = this.store.peekRecord('company', this.get('companyId'));
+          company.set('customer', customer);
+          company.save().then(function() {
+            // success > save model
+            let system = this.store.peekRecord('system', this.get('systemId'));
+            system.set('customer', customer);
+            system.save().then(function() {
+              // success > save system
+              this.set('customerForm', false);
+              return this.transitionToRoute('business.model.results');
+            });
+          });
+        }
+      }.bind(this), function() {
         // fail
         return this.get('applicationController').notify({
           id: 'fail.saveCustomer',
           message: 'Opslaan van deze klant is mislukt! ' + error,
           type: 'error'
         });
-      }.bind(this));
+      });
+      
     },
 
     saveCompany: function(data) {
       const customerId = this.get('customerId');
-      if (customerId === undefined) {
-        // fail
-        return this.get('applicationController').notify({
-          id: 'fail.noCustomer',
-          message: 'Opslaan is mislukt, er zijn geen klantgegevens!',
-          type: 'error'
-        });
-      }
-      data.customer = this.store.peekRecord('customer', customerId);
+      if (customerId) {
+        data.customer = this.store.peekRecord('customer', customerId);
+      } 
       if (data.otherInvestments === undefined) {
         data.otherInvestments = "0";
       }
@@ -141,13 +179,8 @@ export default Ember.Controller.extend({
     saveSystem: function(data) {
       const customerId = this.get('customerId');
       const companyId = this.get('companyId');
-      if (customerId === undefined) {
-        // fail
-        return this.get('applicationController').notify({
-          id: 'fail.noCustomer',
-          message: 'Opslaan is mislukt, er zijn geen klantgegevens!',
-          type: 'error'
-        });
+      if (customerId) {
+        data.customer = this.store.peekRecord('customer', customerId);
       }
       if (companyId === undefined) {
         // fail
@@ -157,11 +190,11 @@ export default Ember.Controller.extend({
           type: 'error'
         });
       }
-      data.customer = this.store.peekRecord('customer', customerId);
       data.company = this.store.peekRecord('company', companyId);
       const newSystem = this.store.createRecord('system', data);
       newSystem.save().then(function(system) {
         // success
+        this.set('systemId', system.get('id'));
         this.set('systemForm', false);
         return this.transitionToRoute('business.model.results', {
           queryParams: {
