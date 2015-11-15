@@ -148,6 +148,28 @@ export default Ember.Controller.extend({
     },
 
     saveCompany: function(data) {
+      const companyId = this.get('companyId');
+      if (companyId) {
+        let company = this.store.peekRecord('company', companyId);
+        // check for wrong combinations of companyType and incomeCategory
+        if (data.companyType === 'BV' || data.companyType === 'NV') {
+          if (data.incomeCategory !== 'minder dan € 200.000' ||
+            data.incomeCategory !== 'meer dan € 200.000') {
+              data.incomeCategory = 'minder dan € 200.000';
+          }
+        }
+        else {
+          if (data.incomeCategory === 'minder dan € 200.000' ||
+            data.incomeCategory === 'meer dan € 200.000') {
+              data.incomeCategory = '€ 0 - € 18.628';
+          }
+        }
+        // save the company with new data
+        return company.save(data).then(function(){
+          this.set('companyForm', false);
+          return this.set('systemForm', true);
+        }.bind(this));
+      }
       const customerId = this.get('customerId');
       if (customerId) {
         data.customer = this.store.peekRecord('customer', customerId);
