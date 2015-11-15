@@ -23,7 +23,8 @@
         Voeg klantgegevens toe
       {{/if}}
     </button>
-    <button class="emailBtn btn btn-primary" {{action 'goToCompany'}}>Model wijzigen</button>
+
+    <button class="emailBtn btn btn-primary" {{action 'goToCompany' model.system.id model.company.id}}>Model wijzigen</button>
   {{/if}}
 </div>
 
