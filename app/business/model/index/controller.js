@@ -93,9 +93,9 @@ export default Ember.Controller.extend({
   actions: {
 
     saveCustomer: function(data) {
-      return this.store.query('customer', {
-        email: data.email
-      }).then(function(customers) {
+      return this.store.findAll('customer').then(function(customers) {
+        // filter out because emberfire does not support query function
+        customers = customers.filterBy('email', data.email);
         // success > query customer
         if (customers.get('length') < 1) {
           const newCustomer = this.store.createRecord('customer', data);
