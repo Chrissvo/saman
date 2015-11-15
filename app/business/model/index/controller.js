@@ -158,14 +158,21 @@ export default Ember.Controller.extend({
         if (data.companyType === 'BV' || data.companyType === 'NV') {
           if (data.incomeCategory !== 'minder dan € 200.000' ||
             data.incomeCategory !== 'meer dan € 200.000') {
+              company.set('incomeCategory', 'minder dan € 200.000');
               data.incomeCategory = 'minder dan € 200.000';
           }
         }
         else {
           if (data.incomeCategory === 'minder dan € 200.000' ||
             data.incomeCategory === 'meer dan € 200.000') {
+              company.set('incomeCategory', '€ 0 - € 18.628');
               data.incomeCategory = '€ 0 - € 18.628';
           }
+        }
+        // prevent wrong factorOwnUsage
+        if (data.connection === 'Aansluiting kleiner dan of gelijk aan 3x80A') {
+          company.set('factorOwnUsage', 100);
+          data.factorOwnUsage = 100;
         }
         // save the company with new data
         return company.save(data).then(function(){
