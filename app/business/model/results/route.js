@@ -95,12 +95,14 @@ export default Ember.Route.extend({
       this.controllerFor('business.model.index').set('systemId', systemId);
       this.controllerFor('business.model.index').set('companyId', companyId);
       this.controllerFor('business.model.index').set('customerForm', true);
+      this.controllerFor('business.model.index').set('companyForm', false);
       return this.transitionTo('business.model.index');
     },
 
     goToCompany: function(systemId, companyId) {
       this.controllerFor('business.model.index').set('systemId', systemId);
       this.controllerFor('business.model.index').set('companyId', companyId);
+      this.controllerFor('business.model.index').set('customerForm', false);
       this.controllerFor('business.model.index').set('companyForm', true);
       return this.transitionTo('business.model.index');
     }
