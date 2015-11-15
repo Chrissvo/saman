@@ -56,7 +56,7 @@ export default Ember.Route.extend({
             return resolve(undefined);
           }
           return this.store.findRecord('customer', system.get('customer.id')).then(function(customer) {
-            return customer;
+            return resolve(customer);
           }).catch(function(error) {
             //fail
             return applicationController.notify({
