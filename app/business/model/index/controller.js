@@ -9,7 +9,6 @@ export default Ember.Controller.extend({
   companyId: undefined,
   systemId: undefined,
 
-  companyType: 'Eenmanszaak',
   companyTypes: [
     'Eenmanszaak',
     'Maatschap',
@@ -21,7 +20,6 @@ export default Ember.Controller.extend({
     'Vereniging'
   ],
 
-  incomeCategory: '€ 0 - € 18.628',
   personalIncomeCategories: [
     '€ 0 - € 18.628',
     '€ 18.628 - € 33.426',
@@ -33,13 +31,11 @@ export default Ember.Controller.extend({
     'meer dan € 200.000'
   ],
 
-  connection: 'Aansluiting groter dan 3x80A',
   connectionTypes: [
     'Aansluiting groter dan 3x80A',
     'Aansluiting kleiner dan of gelijk aan 3x80A'
   ],
 
-  roofOrientation: 'W',
   roofOrientations: [
     'W',
     'WWZ',
@@ -52,7 +48,6 @@ export default Ember.Controller.extend({
     'O'
   ],
 
-  roofSlope: '0',
   roofSlopes: [
     '0',
     '5',
@@ -75,7 +70,6 @@ export default Ember.Controller.extend({
     '90'
   ],
 
-  sdePhase: 'Fase 1 (vanaf 31 maart)',
   sdePhases: [
     'Fase 1 (vanaf 31 maart)',
     'Fase 2 (vanaf 20 april)',
