@@ -73,7 +73,7 @@ export default Ember.Controller.extend({
     const energyUsage = this.get('model.company.energyUsage');
     return totalEnergyTax / energyUsage;
   }.property(),
-      
+
   taxRate: function() {
     const incomeCategory = this.get('model.company.incomeCategory');
     let taxRate = 0;
@@ -199,7 +199,7 @@ export default Ember.Controller.extend({
         break;
       case 'Fase 9 (vanaf 9 november)':
         baseAmount = 0.141;
-        break;    
+        break;
     }
     return baseAmount;
   }.property(),
@@ -266,7 +266,7 @@ export default Ember.Controller.extend({
       label: 'Aansluiting',
       value: this.get('model.company.connection')
     }];
-  }.property(),
+  }.property('model.company', 'model.system'),
 
   energyData: function() {
     const energyUsage = this.get('model.company.energyUsage');
@@ -298,7 +298,7 @@ export default Ember.Controller.extend({
       type: 'currency',
       precision: 3
     }];
-  }.property(),
+  }.property('model.company', 'model.system'),
 
   solarData: function() {
     const panelAmount = this.get('model.system.panelAmount');
@@ -323,7 +323,7 @@ export default Ember.Controller.extend({
       precision: 0,
       suffix: 'Watt piek'
     }];
-  }.property(),
+  }.property('model.company', 'model.system'),
 
   investmentData: function() {
     const panelPrice = this.get('model.system.panelPrice');
@@ -348,7 +348,7 @@ export default Ember.Controller.extend({
       value: netInvestment,
       type: 'currency'
     }];
-  }.property(),
+  }.property('model.company', 'model.system'),
 
   savingsData: function() {
     const sdeContribution = this.get('sdeContribution');
@@ -496,7 +496,7 @@ export default Ember.Controller.extend({
         suffix: '%'
       }];
     }
-  }.property(),
+  }.property('model.company', 'model.system'),
 
   sdeData: function() {
     const sdePhase = this.get('model.system.sdePhase');
@@ -531,7 +531,7 @@ export default Ember.Controller.extend({
       value: sdeLifeContribution,
       type: 'currency'
     }];
-  }.property(),
+  }.property('model.company', 'model.system'),
 
   eiaData: function() {
     const grossInvestment = this.get('grossInvestment');
@@ -559,7 +559,7 @@ export default Ember.Controller.extend({
       value: EIA,
       type: 'currency'
     }];
-  }.property(),
+  }.property('model.company', 'model.system'),
 
   kiaData: function() {
     const otherInvestments = this.get('model.company.otherInvestments');
@@ -618,7 +618,7 @@ export default Ember.Controller.extend({
       value: solarKIA,
       type: 'currency'
     }];
-  }.property(),
+  }.property('model.company', 'model.system'),
 
   initialDepreciationPercentage: 0.1,
 
@@ -637,7 +637,7 @@ export default Ember.Controller.extend({
       value: restDepreciation,
       type: 'currency'
     }];
-  }.property(),
+  }.property('model.company', 'model.system'),
 
   taxDeductionData: function() {
     const EIA = this.get('EIA');
@@ -678,7 +678,7 @@ export default Ember.Controller.extend({
       value: totalFiscalAdvantage,
       type: 'currency'
     }];
-  }.property(),
+  }.property('model.company', 'model.system'),
 
   revenueData: function() {
     const roofOrientation = this.get('model.system.roofOrientation');
@@ -703,7 +703,7 @@ export default Ember.Controller.extend({
       precision: 0,
       suffix: 'kWh/jaar'
     }];
-  }.property(),
+  }.property('model.company', 'model.system'),
 
   // roofOrientationFactor for lack of a better solution
   roofOrientationFactor: function() {
