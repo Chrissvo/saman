@@ -37,26 +37,26 @@ export default Ember.Controller.extend({
   energyTaxBracket1: function() {
     const energyUsage = this.get('model.company.energyUsage');
     if (energyUsage > 10000) {
-      return 10000 * 0.1196;
+      return 10000 * 0.1258;
     }
-    return energyUsage * 0.1196;
+    return energyUsage * 0.1258;
   }.property(),
 
   energyTaxBracket2: function() {
     const energyUsage = this.get('model.company.energyUsage');
     if (energyUsage > 50000) {
-      return 40000 * 0.0469;
+      return 40000 * 0.05696;
     }
     else if (energyUsage <= 10000) {
       return 0;
     }
-    return (energyUsage - 10000) * 0.0469;
+    return (energyUsage - 10000) * 0.05696;
   }.property(),
 
   energyTaxBracket3: function() {
     const energyUsage = this.get('model.company.energyUsage');
     if (energyUsage > 50000) {
-      return (energyUsage - 50000) * 0.0125;
+      return (energyUsage - 50000) * 0.01521;
     }
     return 0;
   }.property(),
@@ -378,31 +378,31 @@ export default Ember.Controller.extend({
           // production is bigger than usage in the 3rd bracket
           if (energyProduction > energyUsage - 10000) {
             // production is bigger than usage in the 2nd bracket
-            energyTaxSaving = taxBracket3 + taxBracket2 + taxBracket1 - ((energyUsage - energyProduction) * 0.1196);
+            energyTaxSaving = taxBracket3 + taxBracket2 + taxBracket1 - ((energyUsage - energyProduction) * 0.1258);
           }
           else {
             // production is smaller than usage in the 2nd bracket
-            energyTaxSaving = taxBracket3 + taxBracket2 - ((energyUsage - energyProduction ) * 0.0469);
+            energyTaxSaving = taxBracket3 + taxBracket2 - ((energyUsage - energyProduction ) * 0.05696);
           }
         }
         else {
           // production is smaller than usage in the 3rd bracket
-          energyTaxSaving = taxBracket3 - ((energyUsage - energyProduction ) * 0.0125);
+          energyTaxSaving = taxBracket3 - ((energyUsage - energyProduction ) * 0.01521);
         }
       }
       else if (taxBracket2 > 0) {
         if (energyProduction > energyUsage - 10000) {
           // production is bigger than usage in the 2nd bracket
-          energyTaxSaving = taxBracket2 + taxBracket1 - ((energyUsage - energyProduction) * 0.1196);
+          energyTaxSaving = taxBracket2 + taxBracket1 - ((energyUsage - energyProduction) * 0.1258);
         }
         else {
           // production is smaller than usage in the 2nd bracket
-          energyTaxSaving =  taxBracket2 - ((energyUsage - energyProduction ) * 0.0469);
+          energyTaxSaving =  taxBracket2 - ((energyUsage - energyProduction ) * 0.05696);
         }
       }
       else {
         // production is smaller than usage in the 3rd bracket
-        energyTaxSaving = energyProduction * 0.1196;
+        energyTaxSaving = energyProduction * 0.1258;
       }
     }
 
