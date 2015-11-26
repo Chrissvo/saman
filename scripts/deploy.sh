@@ -9,7 +9,6 @@ set -o pipefail   # don't ignore exit codes when piping output
 source scripts/functions.sh
 
 echo -e "Hello Christian\n"
-info "Ember will start building your project rightaway..."
 
 current_version=`npm version | grep solarcalculation | cut -f2 -d"'"`
 
@@ -62,6 +61,8 @@ if [ "$REPLY" = "major" ] || [ "$REPLY" = "minor" ] || [ "$REPLY" = "patch" ]; t
 fi
 
 echo
+info "Ember will start building your project rightaway..."
+
 ember build --environment=production --output-path dist/ --watch false
 date=`date -u +"%Y-%m-%dT%H:%M:%SZ"`
 deployed_branch=`git symbolic-ref --short -q HEAD`
