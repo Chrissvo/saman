@@ -1,3 +1,5 @@
+# scripts/functions.sh
+
 BLA="$(echo -e "\033[30m")"
 RED="$(echo -e "\033[31m")"
 GRE="$(echo -e "\033[32m")"
