@@ -111,10 +111,16 @@ export default Ember.Controller.extend({
 
     const systemPower = this.get('systemPower');
     const grossInvestment = this.get('grossInvestment');
+
     if (systemPower > 25000 && grossInvestment > 2300) {
-      return (grossInvestment - 25000 * panelPrice) * 0.415;
+      const maxEIA = systemPower / 1000 * 750;
+      if (grossInvestment * 0.58 > maxEIA) {
+        return maxEIA;
+      }
+      return grossInvestment * 0.58;
     }
     return 0;
+    
   }.property(),
 
   solarKIA: function() {
@@ -540,7 +546,7 @@ export default Ember.Controller.extend({
     let eiaPercentage = 0;
     if (connection === 'Aansluiting kleiner dan of gelijk aan 3x80A' &&
       systemPower > 25000 && grossInvestment > 2300) {
-      eiaPercentage = 0.415;
+      eiaPercentage = 0.58;
     }
 
     const EIA = this.get('EIA');
