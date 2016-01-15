@@ -1,19 +1,15 @@
 # scripts/deploy.sh
 
-set -e            # fail fast
-set -o pipefail   # don't ignore exit codes when piping output
-# set -x          # enable debugging
-
 source scripts/functions.sh
 
-echo -e "Hello Christian\n"
+echo "Hello Christian\n"
 
 current_version=`npm version | grep solarcalculation | cut -f2 -d"'"`
 
 if [ -z "$current_version" ]; then
   error "Something went wrong while detecting the current version"
 else
-  echo -e "\nSolarcalculation is currently on version: ${CYA}$current_version${RES}"
+  echo "\nSolarcalculation is currently on version: ${CYA}$current_version${RES}"
 fi
 
 read -p "Do you wish to version bump? " -r
@@ -66,7 +62,7 @@ date=`date -u +"%Y-%m-%dT%H:%M:%SZ"`
 deployed_branch=`git symbolic-ref --short -q HEAD`
 last_commit_hash=`git rev-parse --verify HEAD`
 last_commit_url="https://github.com/chrissvo/solarcalculation/commit/$last_commit_hash"
-echo -e "{\"date\":\""$date"\", \"developer\":\""`whoami`"\", \"environment\":\""$environment"\", \"branch\":\""$deployed_branch"\", \"commit\":\""$last_commit_hash"\", \"github_url\":\""$last_commit_url"\"}" > dist/build.json
+echo "{\"date\":\""$date"\", \"developer\":\""`whoami`"\", \"environment\":\""$environment"\", \"branch\":\""$deployed_branch"\", \"commit\":\""$last_commit_hash"\", \"github_url\":\""$last_commit_url"\"}" > dist/build.json
 
 echo
 read -p "Do you want to deploy to Amazon? " -r
