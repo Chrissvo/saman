@@ -1,14 +1,14 @@
 # scripts/functions.sh
 
-BLA="$(echo -e "\033[30m")"
-RED="$(echo -e "\033[31m")"
-GRE="$(echo -e "\033[32m")"
-YEL="$(echo -e "\033[33m")"
-BLU="$(echo -e "\033[34m")"
-PUR="$(echo -e "\033[35m")"
-CYA="$(echo -e "\033[36m")"
-WHI="$(echo -e "\033[37m")"
-RES="$(echo -e "\033[0m")"
+BLA="$(echo "\033[30m")"
+RED="$(echo "\033[31m")"
+GRE="$(echo "\033[32m")"
+YEL="$(echo "\033[33m")"
+BLU="$(echo "\033[34m")"
+PUR="$(echo "\033[35m")"
+CYA="$(echo "\033[36m")"
+WHI="$(echo "\033[37m")"
+RES="$(echo "\033[0m")"
 
 # color functions
 info () {

@@ -1,9 +1,5 @@
 # scripts/start.sh
 
-set -e            # fail fast
-set -o pipefail   # don't ignore exit codes when piping output
-# set -x          # enable debugging
-
 source scripts/functions.sh
 
 # check for outdated, incorrect, and unused dependencies
