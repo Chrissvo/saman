@@ -1,6 +1,4 @@
-#!/usr/bin/env bash
-
-# deploy script for solarcalculation
+# scripts/deploy.sh
 
 set -e            # fail fast
 set -o pipefail   # don't ignore exit codes when piping output
