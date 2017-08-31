@@ -151,7 +151,7 @@ export default Ember.Controller.extend({
             }.bind(this));
           }.bind(this));
         }
-      }.bind(this), function() {
+      }.bind(this), function(error) {
         // fail
         return this.get('applicationController').notify({
           id: 'fail.saveCustomer',

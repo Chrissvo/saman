@@ -15,7 +15,7 @@ default Ember.Component.extend({
   }.on('init'),
 
   buttonText: function() {
-    if (!Em.isEmpty(this.get('text'))) {
+    if (!Ember.isEmpty(this.get('text'))) {
       return this.get('text');
     }
     return 'Submit';
@@ -45,4 +45,3 @@ default Ember.Component.extend({
 
   }
 });
-

@@ -103,7 +103,6 @@ export default Ember.Controller.extend({
   }.property(),
 
   EIA: function() {
-    const panelPrice = this.get('model.system.panelPrice');
     const connection = this.get('model.company.connection');
     if (connection === "Aansluiting groter dan 3x80A") {
       return 0;
@@ -120,7 +119,7 @@ export default Ember.Controller.extend({
       return grossInvestment * 0.58;
     }
     return 0;
-    
+
   }.property(),
 
   solarKIA: function() {

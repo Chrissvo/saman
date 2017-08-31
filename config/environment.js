@@ -1,9 +1,10 @@
-/* jshint node: true */
+/* eslint-env node */
+'use strict';
 
 module.exports = function(environment) {
-  var ENV = {
+  let ENV = {
     modulePrefix: 'solarcalculation',
-    environment: environment,
+    environment,
     contentSecurityPolicy: {
       'connect-src': "'self' https://auth.firebase.com wss://*.firebaseio.com",
       'img-src': "'self' https://saman.christian.surf/assets/images/",
@@ -12,13 +13,22 @@ module.exports = function(environment) {
       'script-src': "'self' https://*.firebaseio.com",
       'default-src': "'self' https://*.firebaseio.com"
     },
-    firebase: 'https://solarcalculation.firebaseio.com/',
-    baseURL: '/',
+    firebase: {
+      apiKey: "AIzaSyDBlSmEBqoTkmSndfSyA7fFSGMS6s-ncCs",
+      authDomain: "solarcalculation.firebaseapp.com",
+      databaseURL: "https://solarcalculation.firebaseio.com",
+      storageBucket: "solarcalculation.appspot.com",
+    },
+    rootURL: '/',
     locationType: 'auto',
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
         // e.g. 'with-controller': true
+      },
+      EXTEND_PROTOTYPES: {
+        // Prevent Ember Data from overriding Date.parse.
+        Date: false
       }
     },
 
@@ -38,7 +48,6 @@ module.exports = function(environment) {
 
   if (environment === 'test') {
     // Testem prefers this...
-    ENV.baseURL = '/';
     ENV.locationType = 'none';
 
     // keep test console output quieter

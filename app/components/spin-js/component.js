@@ -1,6 +1,5 @@
-// spin-js
+import Spinner from 'npm:spin.js';
 import Ember from 'ember';
-
 export default Ember.Component.extend({
 
   // see http://fgnass.github.io/spin.js/ for usage info
@@ -24,7 +23,7 @@ export default Ember.Component.extend({
 
   showSpinner: function() {
     var target = this.get('element');
-    this.spinner = new Spinner({
+    this.spinner = Spinner({
       lines: this.get('lines'),
       length: this.get('length'),
       width: this.get('width'),
